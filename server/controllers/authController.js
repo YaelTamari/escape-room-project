@@ -14,14 +14,32 @@ const register = async (req, res) => {
         }
 
         const userRole = role || 'player';
+        // השרת יוצר את המשתמש במסד הנתונים
         const userId = await UserModel.create(username, password, userRole);
 
-        res.status(201).json({ success: true, message: "המשתמש נרשם בהצלחה!", userId });
+        // ==== השינוי מתחיל כאן ====
+        
+        // 1. יוצרים טוקן (JWT) חדש בדיוק כמו בלוגין!
+        const token = jwt.sign(
+            { id: userId, role: userRole },
+            JWT_SECRET,
+            { expiresIn: '3h' }
+        );
+
+        // 2. מחזירים ללקוח את מה שהוא מצפה: הצלחה, טוקן, ופרטי היוזר
+        res.status(201).json({ 
+            success: true, 
+            message: "המשתמש נרשם בהצלחה!", 
+            token, // הנה הטוקן
+            user: { id: userId, username: username, role: userRole, points: 0 } // הנה היוזר (הנחנו שמתחילים מ-0 נקודות)
+        });
+        
+        // ==== השינוי מסתיים כאן ====
+
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
 };
-
 // 2. פונקציית התחברות
 const login = async (req, res) => {
     const { username, password } = req.body;

@@ -1,20 +1,43 @@
 import RoomModel from '../models/roomModel.js';
+const getAllRooms = async (req, res) => {
+    try {
+        const rooms = await RoomModel.getAllRooms();
+
+        // מחזירים ללקוח בדיוק את המבנה שה-React מצפה לקבל
+        res.status(200).json({
+            success: true,
+            rooms: rooms
+        });
+    } catch (error) {
+        console.error("שגיאה בשליפת חדרים:", error);
+        res.status(500).json({ success: false, message: 'שגיאה בשליפת החדרים מהשרת' });
+    }
+};
+
 
 // 1. יצירת חדר חדש
 const createRoom = async (req, res) => {
-    const { title, bg_image_id, bg_audio_id, timer_seconds, min_points_required, difficulty_level } = req.body;
-    
+    const { title,
+        description,
+        cover_image_id,
+        bg_image_id,
+        bg_audio_id,
+        timer_seconds,
+        min_points_required,
+        difficulty_level } = req.body;
     // ה-ID של המפתח מגיע אלינו ישירות מהטוקן המאובטח! (המידלוור שתל אותו ב-req.user)
-    const creatorId = req.user.id; 
+    const creatorId = req.user.id;
 
     try {
         const roomId = await RoomModel.create(
-            title, 
-            creatorId, 
-            bg_image_id, 
-            bg_audio_id, 
-            timer_seconds, 
-            min_points_required, 
+            title,
+            description,
+            creatorId,
+            cover_image_id,
+            bg_image_id,
+            bg_audio_id,
+            timer_seconds,
+            min_points_required,
             difficulty_level
         );
         res.status(201).json({ success: true, message: "החדר נוצר בהצלחה!", roomId });
@@ -38,12 +61,27 @@ const getMyRooms = async (req, res) => {
 
 // 3. עדכון חדר
 const updateRoom = async (req, res) => {
-    const { id } = req.params; 
-    const { title, bg_image_id, bg_audio_id, timer_seconds, min_points_required, difficulty_level } = req.body;
-
+    const { id } = req.params;
+    const { title,
+        description,
+        cover_image_id,
+        bg_image_id,
+        bg_audio_id,
+        timer_seconds,
+        min_points_required,
+        difficulty_level } = req.body;
     try {
-        await RoomModel.update(id, title, bg_image_id, bg_audio_id, timer_seconds, min_points_required, difficulty_level);
-        res.json({ success: true, message: "החדר עודכן בהצלחה!" });
+        await RoomModel.update(
+            id,
+            title,
+            description,
+            cover_image_id,
+            bg_image_id,
+            bg_audio_id,
+            timer_seconds,
+            min_points_required,
+            difficulty_level
+        ); res.json({ success: true, message: "החדר עודכן בהצלחה!" });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
@@ -60,7 +98,9 @@ const deleteRoom = async (req, res) => {
         res.status(500).json({ success: false, error: err.message });
     }
 };
+
 export default {
+    getAllRooms,
     createRoom,
     getMyRooms,
     updateRoom,

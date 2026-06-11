@@ -1,0 +1,73 @@
+/* Navbar.module.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #1e293b;
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.logoContainer {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.logo {
+    margin: 0;
+    color: #60a5fa;
+    letter-spacing: 1px;
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.greeting {
+    font-size: 17px;
+    color: #fff;
+}
+
+.username {
+    color: #e2e8f0;
+}
+
+.pointsBadge {
+    font-size: 16px;
+    color: #fbbf24;
+    font-weight: bold;
+    background-color: rgba(251, 191, 36, 0.1);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid #fbbf24;
+}
+
+/* כפתור גנרי של הניווט - עכשיו יש לו גם הובר! */
+.navButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    color: #e2e8f0;
+    transition: color 0.2s ease;
+}
+
+.navButton:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.logoutButton {
+    color: #f87171;
+}
+
+.logoutButton:hover {
+    color: #ef4444;
+    text-decoration: underline;
+}

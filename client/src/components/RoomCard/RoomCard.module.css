@@ -1,0 +1,78 @@
+/* RoomCard.module.css */
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e5e7eb;
+    /* הוספנו אנימציה חלקה לכרטיסייה! */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* כשהעכבר עובר על הכרטיסייה היא קופצת קצת למעלה ומקבלת צל */
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.title {
+    margin: 0 0 10px 0;
+    color: #111827;
+    font-size: 20px;
+}
+
+.timer {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* בסיס משותף לכל הכפתורים */
+.button {
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+/* עיצוב ספציפי לכל כפתור + הובר */
+.manageBtn {
+    flex: 1.5;
+    background-color: #8b5cf6;
+    color: white;
+}
+
+.manageBtn:hover {
+    background-color: #7c3aed; /* צבע סגול כהה יותר בהובר */
+}
+
+.editBtn {
+    flex: 1;
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.editBtn:hover {
+    background-color: #e5e7eb;
+}
+
+.deleteBtn {
+    flex: 1;
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.deleteBtn:hover {
+    background-color: #fecaca;
+}
