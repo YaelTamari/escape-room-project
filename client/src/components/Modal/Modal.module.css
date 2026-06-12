@@ -1,0 +1,93 @@
+/* Modal.module.css */
+
+/* המסך השחור והשקוף שחוסם את הרקע */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* אנימציה של הופעה רכה */
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* הריבוע הלבן של ההודעה */
+.modalBox {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+.title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.message {
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* כפתורים גנריים למודאל */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* צבעי כפתורים ודינמיות */
+.cancelBtn {
+    background: #6b7280;
+    color: #fff;
+}
+
+.primaryBtn {
+    background: #3b82f6; /* כחול רגיל */
+    color: #fff;
+}
+
+.dangerBtn {
+    background: #ef4444; /* אדום לאזהרה/מחיקה */
+    color: #fff;
+}
+
+.successBtn {
+    background: #10b981; /* ירוק לשמירה */
+    color: #fff;
+}
+
+/* אנימציות הופעה */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
