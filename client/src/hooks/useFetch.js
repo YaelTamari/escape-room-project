@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 // 1. הגדרת ההוק. הוא מקבל 2 דברים: פונקציה להפעיל, ופרמטר (כמו טוקן או ID)
 export const useFetch = (apiFunction, param = null) => {
 

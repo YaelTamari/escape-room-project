@@ -34,5 +34,10 @@ router.delete('/delete/:id',
     authMiddleware.restrictTo('developer'),
     roomController.deleteRoom
 );
+router.get('/:id',
+    authMiddleware.verifyToken,
+    authMiddleware.restrictTo('developer'),
+    roomController.getRoomById
+);
 
 export default router;

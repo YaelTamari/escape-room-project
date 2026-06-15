@@ -4,7 +4,7 @@ import { registerUser } from '../api/authApi';
 import { AuthContext } from '../context/AuthContext';
 
 // הייבוא של המודאל שלנו
-import Modal from '../components/Modal';
+import Modal from '../components/Modal/Modal';
 
 const Register = () => {
     const [username, setUsername] = useState('');

@@ -4,8 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import { getAllRooms } from '../api/roomApi';
 
 // הכלים הגנריים שלנו!
-import Navbar from '../components/Navbar';
-import Modal from '../components/Modal';
+import Navbar from '../components/Navbar/Navbar';
+import Modal from '../components/Modal/Modal';
 import { useFetch } from '../hooks/useFetch';
 
 const Lobby = () => {

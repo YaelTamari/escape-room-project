@@ -5,7 +5,7 @@ import { loginUser } from '../api/authApi';
 import { AuthContext } from '../context/AuthContext';
 
 // הייבוא של המודאל שלנו
-import Modal from '../components/Modal';
+import Modal from '../components/Modal/Modal';
 
 const Login = () => {
     const [username, setUsername] = useState('');

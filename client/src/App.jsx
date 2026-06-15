@@ -7,6 +7,7 @@ import Lobby from './pages/Lobby';
 import DeveloperDashboard from './pages/DeveloperDashboard';
 import CreateRoom from './pages/CreateRoom'; 
 import ManageRoomQuestions from './pages/ManageRoomQuestions';
+import EditRoom from './pages/EditRoom';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/lobby" element={<Lobby />} />
       <Route path="/developer" element={<DeveloperDashboard />} />
       <Route path="/developer/create-room" element={<CreateRoom />} />
+      <Route path="/developer/edit-room/:roomId" element={<EditRoom />} />
       <Route path="/manage-room/:roomId" element={<ManageRoomQuestions />} />
     </Routes>
   );

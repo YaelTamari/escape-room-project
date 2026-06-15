@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMyRooms, deleteRoom } from '../api/roomApi'; 
 
-import Navbar from '../components/Navbar';
-import RoomCard from '../components/RoomCard';
-import Modal from '../components/Modal'; // הייבוא של המודאל!
+import Navbar from '../components/Navbar/Navbar';
+import RoomCard from '../components/RoomCard/RoomCard';
+import Modal from '../components/Modal/Modal'; // הייבוא של המודאל!
 import { useFetch } from '../hooks/useFetch'; 
 
 const DeveloperDashboard = () => {

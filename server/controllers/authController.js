@@ -7,6 +7,27 @@ const JWT_SECRET = 'my_super_secret_key_123';
 const register = async (req, res) => {
     const { username, password, role } = req.body;
 
+    const ALLOWED_DEVELOPERS = [
+        { username: 'יעל', password: '1234' },
+        { username: 'נעמי', password: '123456' }
+    ];
+
+
+    // ==== חומת האש (לפני שפונים בכלל ל-DB) ====
+    if (role === 'developer') {
+        const isAuthorized = ALLOWED_DEVELOPERS.some(
+            dev => dev.username === username && dev.password === password
+        );
+
+        if (!isAuthorized) {
+            return res.status(403).json({
+                success: false,
+                message: "גישה נדחתה: רק מנהלות האתר מורשות להירשם כמפתחות."
+            });
+        }
+    }
+
+
     try {
         const existingUser = await UserModel.findByUsername(username);
         if (existingUser) {
@@ -18,7 +39,7 @@ const register = async (req, res) => {
         const userId = await UserModel.create(username, password, userRole);
 
         // ==== השינוי מתחיל כאן ====
-        
+
         // 1. יוצרים טוקן (JWT) חדש בדיוק כמו בלוגין!
         const token = jwt.sign(
             { id: userId, role: userRole },
@@ -27,13 +48,13 @@ const register = async (req, res) => {
         );
 
         // 2. מחזירים ללקוח את מה שהוא מצפה: הצלחה, טוקן, ופרטי היוזר
-        res.status(201).json({ 
-            success: true, 
-            message: "המשתמש נרשם בהצלחה!", 
+        res.status(201).json({
+            success: true,
+            message: "המשתמש נרשם בהצלחה!",
             token, // הנה הטוקן
             user: { id: userId, username: username, role: userRole, points: 0 } // הנה היוזר (הנחנו שמתחילים מ-0 נקודות)
         });
-        
+
         // ==== השינוי מסתיים כאן ====
 
     } catch (err) {
@@ -46,7 +67,7 @@ const login = async (req, res) => {
 
     try {
         const user = await UserModel.findByUsername(username);
-        
+
         if (!user || user.password !== password) {
             return res.status(401).json({ success: false, message: 'שם משתמש או סיסמה שגויים' });
         }
@@ -57,9 +78,9 @@ const login = async (req, res) => {
             { expiresIn: '3h' }
         );
 
-        res.json({ 
-            success: true, 
-            message: "התחברת בהצלחה!", 
+        res.json({
+            success: true,
+            message: "התחברת בהצלחה!",
             token,
             user: { id: user.id, username: user.username, role: user.role, points: user.points }
         });
