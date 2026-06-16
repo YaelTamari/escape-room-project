@@ -1,0 +1,21 @@
+.pageContainer {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    font-family: sans-serif;
+    direction: rtl;
+}
+
+.contentWrapper {
+    padding: 40px 20px;
+}
+
+.errorMessage {
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    background-color: #fee2e2;
+    color: #ef4444;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+}

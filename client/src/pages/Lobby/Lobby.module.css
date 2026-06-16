@@ -1,0 +1,127 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    backgroundColor: #0f172a;
+    color: #60a5fa;
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+.lobbyContainer {
+    background-color: #0f172a;
+    min-height: 100vh;
+    color: #f8fafc;
+    font-family: system-ui, sans-serif;
+}
+
+.headerSection {
+    text-align: center;
+    padding: 50px 20px 30px;
+}
+
+.title {
+    font-size: 42px;
+    margin: 0 0 15px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+    color: #94a3b8;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.errorMessage {
+    color: #ef4444;
+    margin-top: 20px;
+    font-weight: bold;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.roomsGrid {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+    padding: 0 40px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* עיצובים דינמיים של כרטיסיית חדר */
+.roomCard {
+    width: 320px;
+    background-color: #1e293b;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.imageArea {
+    height: 200px;
+    position: relative;
+}
+
+.roomImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    background-color: rgba(15, 23, 42, 0.85);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.detailsArea {
+    padding: 25px 20px;
+}
+
+.roomTitle {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+}
+
+.roomTimer {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0 0 20px 0;
+}
+
+.footerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.difficulty {
+    font-size: 15px;
+    color: #94a3b8;
+}
+
+.difficultyValue {
+    color: #e2e8f0;
+    font-weight: bold;
+}
+
+.pointsStatus {
+    font-size: 15px;
+    font-weight: bold;
+}

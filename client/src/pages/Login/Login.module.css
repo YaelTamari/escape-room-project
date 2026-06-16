@@ -1,0 +1,50 @@
+.authContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.inputField {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.submitButton {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+    background-color: #439a46;
+}
+
+.footerText {
+    margin-top: 20px;
+}
+
+.registerLink {
+    color: #008CBA;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.registerLink:hover {
+    text-decoration: underline;
+}

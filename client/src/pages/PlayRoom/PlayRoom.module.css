@@ -1,0 +1,245 @@
+.loading {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 24px;
+}
+
+.pageContainer {
+    min-height: 100vh;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #1f2937;
+}
+
+.exitButtonWrapper {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    z-index: 10;
+}
+
+.exitButton {
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.exitButton:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.gameLayout {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 60px auto 0 auto;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* === עמודת תרמיל הכלים === */
+.sidebar {
+    flex: 0 0 280px;
+    background-color: rgba(31, 41, 55, 0.85);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #4b5563;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    color: #f3f4f6;
+}
+
+.sidebarTitle {
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #6b7280;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.noElementsText {
+    text-align: center;
+    font-size: 14px;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.elementsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.hourglassContainer {
+    background-color: rgba(0,0,0,0.4);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #fbbf24;
+}
+
+.hourglassIcon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.hourglassLabel {
+    color: #fbbf24;
+}
+
+.elementButton {
+    padding: 12px;
+    background-color: #374151;
+    color: #f3f4f6;
+    border: 1px solid #6b7280;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.elementButton:hover {
+    background-color: #4b5563;
+}
+
+/* === עמודת החידה המרכזית === */
+.mainCard {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.roomTitle {
+    color: #8b5cf6;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.stepIndicator {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4b5563;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+.questionBox {
+    background-color: #f9fafb;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #d1d5db;
+}
+
+.storyText {
+    color: #374151;
+    margin-bottom: 15px;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.questionText {
+    margin: 0;
+    color: #111827;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inputField {
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
+    font-size: 18px;
+}
+
+.actionButtonsRow {
+    display: flex;
+    gap: 10px;
+}
+
+.submitButton {
+    flex: 1;
+    padding: 15px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+    background-color: #2563eb;
+}
+
+.hintButton {
+    padding: 15px 25px;
+    background-color: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.hintButton:hover {
+    background-color: #d97706;
+}
+
+/* === עיצובים מיוחדים לפופאפים של האלמנטים === */
+.scrollPopup {
+    font-family: 'AntiqueFont', cursive;
+    background-image: url("http://localhost:5000/assets/popup/מגילה.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    padding: 40px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2c1e0f;
+    font-size: 22px;
+}
+
+.imagePopupContainer {
+    text-align: center;
+}
+
+.imagePopup {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 2px solid #d1d5db;
+}

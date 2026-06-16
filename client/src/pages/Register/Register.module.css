@@ -1,0 +1,65 @@
+.authContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.inputField, .selectField {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.roleWrapper {
+    text-align: right;
+    padding: 0 5px;
+}
+
+.roleLabel {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.selectField {
+    width: 100%;
+}
+
+.submitButton {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+    background-color: #007096;
+}
+
+.footerText {
+    margin-top: 20px;
+}
+
+.loginLink {
+    color: #4CAF50;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.loginLink:hover {
+    text-decoration: underline;
+}

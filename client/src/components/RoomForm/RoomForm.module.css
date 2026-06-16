@@ -1,0 +1,95 @@
+.formContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.title {
+    margin: 0;
+    color: #8b5cf6;
+}
+
+.cancelButton {
+    background: none;
+    border: 1px solid #d1d5db;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.formElement {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #f9fafb;
+}
+
+.textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.divider {
+    border: 1px solid #f3f4f6;
+    margin: 10px 0;
+}
+
+.flexRow {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.flexChild {
+    flex: 1;
+    min-width: 250px;
+}
+
+.flexChildSmall {
+    flex: 1;
+    min-width: 150px;
+}
+
+.submitButton {
+    margin-top: 30px;
+    padding: 16px;
+    background-color: #8b5cf6;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.submitButton:disabled {
+    not-allowed: pointer; /* שומר על הלוגיקה המקורית של דיסאייבלד */
+}

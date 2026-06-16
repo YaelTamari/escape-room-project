@@ -1,0 +1,77 @@
+.loading {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.dashboardContainer {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    font-family: sans-serif;
+    color: #1f2937;
+}
+
+.mainContent {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.headerCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.headerTitle {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+}
+
+.headerSubtitle {
+    margin: 0;
+    color: #6b7280;
+}
+
+.createButton {
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(139, 92, 246, 0.3);
+}
+
+.errorMessage {
+    color: red;
+    text-align: center;
+}
+
+.sectionTitle {
+    font-size: 22px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 50px;
+    background-color: white;
+    border-radius: 12px;
+    color: #9ca3af;
+}
+
+.roomsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}

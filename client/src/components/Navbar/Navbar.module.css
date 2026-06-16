@@ -4,70 +4,101 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background-color: #1e293b;
-    border-bottom: 2px solid #3b82f6;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    padding: 16px 40px;
+    
+    /* אפקט זכוכית שקופה בגוון יער מסתורי עמוק */
+    background: rgba(12, 22, 17, 0.75); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* מסגרת זהב עתיק עדינה מאוד בתחתית */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    
+    /* צל רך ועמוק שנותן תחושת תלת-מימד מעל הרקע */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    
+    /* מקבע את הנאבר למעלה בזמן גלילה */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logoContainer {
     display: flex;
-    gap: 25px;
+    gap: 30px;
     align-items: center;
 }
 
 .logo {
     margin: 0;
-    color: #60a5fa;
-    letter-spacing: 1px;
+    font-size: 24px;
+    font-weight: 700;
+    /* צבע זהב קוסמי זוהר */
+    color: #dfb76c;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.35);
+    font-family: 'Cinzel', 'Georgia', serif; /* פונט בסגנון משחקי פנטזיה/מסתורין */
 }
 
 .userSection {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
 }
 
 .greeting {
-    font-size: 17px;
-    color: #fff;
+    font-size: 16px;
+    color: #94a3b8; /* אפור עמוק ונקי */
 }
 
 .username {
-    color: #e2e8f0;
+    color: #f1f5f9;
+    font-weight: 600;
+    border-bottom: 1px dashed rgba(241, 245, 249, 0.3);
+    padding-bottom: 2px;
 }
 
 .pointsBadge {
-    font-size: 16px;
-    color: #fbbf24;
+    font-size: 15px;
     font-weight: bold;
-    background-color: rgba(251, 191, 36, 0.1);
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid #fbbf24;
+    color: #fbbf24;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(217, 119, 6, 0.05));
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    box-shadow: inset 0 0 10px rgba(251, 191, 36, 0.05), 0 0 15px rgba(251, 191, 36, 0.1);
+    letter-spacing: 0.5px;
 }
 
-/* כפתור גנרי של הניווט - עכשיו יש לו גם הובר! */
+/* כפתורי הניווט - מעוצבים ככפתורי פרימיום נקיים */
 .navButton {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-    color: #e2e8f0;
-    transition: color 0.2s ease;
+    font-weight: 600;
+    font-size: 15px;
+    color: #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navButton:hover {
-    color: #fff;
-    text-decoration: underline;
+    color: #dfb76c;
+    background: rgba(223, 183, 108, 0.08);
+    border-color: rgba(223, 183, 108, 0.4);
+    box-shadow: 0 0 15px rgba(223, 183, 108, 0.1);
 }
 
 .logoutButton {
     color: #f87171;
+    background: rgba(239, 68, 68, 0.03);
+    border-color: rgba(239, 68, 68, 0.1);
 }
 
 .logoutButton:hover {
-    color: #ef4444;
-    text-decoration: underline;
+    color: #ffffff;
+    background: #ef4444;
+    border-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
 }

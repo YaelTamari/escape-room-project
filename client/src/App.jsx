@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Lobby from './pages/Lobby';
-import DeveloperDashboard from './pages/DeveloperDashboard';
-import CreateRoom from './pages/CreateRoom';
-import ManageRoomQuestions from './pages/ManageRoomQuestions';
-import EditRoom from './pages/EditRoom';
-import PlayRoom from './pages/PlayRoom'; 
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import Lobby from './pages/Lobby/Lobby';
+import DeveloperDashboard from './pages/DeveloperDashboard/DeveloperDashboard';
+import CreateRoom from './pages/CreateRoom/CreateRoom';
+import ManageRoomQuestions from './pages/ManageRoomQuestions/ManageRoomQuestions';
+import EditRoom from './pages/EditRoom/EditRoom';
+import PlayRoom from './pages/PlayRoom/PlayRoom'; 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'; 
 
 import './assets/fonts/fonts.css';

@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useEffect } from 'react';
 
 // יצירת ה-Context
@@ -32,6 +31,21 @@ export const AuthProvider = ({ children }) => {
     };
     
 
+//////////////////////////////
+const updatePoints = (pointsToAdd) => {
+        if (user) {
+            // לוקחים את הנקודות הקיימות, ומוסיפים להן את מה שהרווחנו כרגע
+            const currentPoints = user.total_points || 0;
+            const updatedUser = { ...user, total_points: currentPoints + pointsToAdd };
+            
+            setUser(updatedUser);
+            localStorage.setItem('user', JSON.stringify(updatedUser)); // מעדכנים גם בזיכרון המקומי
+        }
+    };
+    //////////////////////
+
+
+
     // פונקציית התנתקות מהמערכת
     const logout = () => {
         setUser(null);
@@ -40,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, authenticate, logout, loading }}>
+        <AuthContext.Provider value={{ user, authenticate, logout, loading, updatePoints }}>
             {children}
         </AuthContext.Provider>
     );

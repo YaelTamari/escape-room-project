@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getRoomById, updateRoom } from '../api/roomApi';
-import Navbar from '../components/Navbar/Navbar';
-import Modal from '../components/Modal/Modal';
-import RoomForm from '../components/RoomForm/RoomForm';
+import { getRoomById, updateRoom } from '../../api/roomApi';
+import Navbar from '../../components/Navbar/Navbar';
+import Modal from '../../components/Modal/Modal';
+import RoomForm from '../../components/RoomForm/RoomForm';
+import styles from './EditRoom.module.css'; // ייבוא ה-CSS המודולרי החדש
 
 const EditRoom = () => {
     const { roomId } = useParams();
@@ -72,15 +73,20 @@ const EditRoom = () => {
         }
     };
 
-    if (pageLoading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>טוען נתונים... ⏳</div>;
+    if (pageLoading) return <div className={styles.loadingState}>טוען נתונים... ⏳</div>;
 
     return (
-        <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', fontFamily: 'sans-serif', direction: 'rtl' }}>
+        <div className={styles.pageContainer}>
             <Navbar />
-            <div style={{ padding: '40px 20px' }}>
-                {error && <div style={{ maxWidth: '800px', margin: '0 auto 20px auto', backgroundColor: '#fee2e2', color: '#ef4444', padding: '10px', borderRadius: '6px', textAlign: 'center' }}>{error}</div>}
+            <div className={styles.contentWrapper}>
                 
-                {/* אותו טופס, אבל הפעם isEdit=true */}
+                {error && (
+                    <div className={styles.errorMessage}>
+                        {error}
+                    </div>
+                )}
+                
+                {/* אותו טופס גנרי, הפעם עם סימון עריכה */}
                 <RoomForm 
                     formData={formData} 
                     handleChange={handleChange} 
@@ -91,7 +97,14 @@ const EditRoom = () => {
             </div>
 
             {successModal.show && (
-                <Modal title="עודכן בהצלחה" titleColor="#10b981" message="הגדרות החדר נשמרו בהצלחה!" confirmText="חזור ללוח הבקרה" confirmType="success" onConfirm={() => navigate('/developer')} />
+                <Modal 
+                    title="עודכן בהצלחה" 
+                    titleColor="#10b981" 
+                    message="הגדרות החדר נשמרו בהצלחה!" 
+                    confirmText="חזור ללוח הבקרה" 
+                    confirmType="success" 
+                    onConfirm={() => navigate('/developer')} 
+                />
             )}
         </div>
     );
