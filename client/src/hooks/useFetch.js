@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-
 // 1. הגדרת ההוק. הוא מקבל 2 דברים: פונקציה להפעיל, ופרמטר (כמו טוקן או ID)
+import { useState, useEffect } from 'react';
 export const useFetch = (apiFunction, param = null) => {
 
     // 2. פותחים 3 סטייטים שינהלו לנו את המסך
@@ -10,6 +9,10 @@ export const useFetch = (apiFunction, param = null) => {
 
     // 3. יוז-אפקט שירוץ פעם אחת כשהעמוד עולה
     useEffect(() => {
+                if (!localStorage.getItem('token')) {
+            setLoading(false);
+            return;
+        }
         const fetchData = async () => {
             setLoading(true); // מדליק את מסך הטעינה
             try {

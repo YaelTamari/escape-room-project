@@ -1,10 +1,7 @@
-
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom'; // 1. הוספנו את Navigate לייבוא
 import { loginUser } from '../api/authApi';
 import { AuthContext } from '../context/AuthContext';
-
-// הייבוא של המודאל שלנו
 import Modal from '../components/Modal/Modal';
 
 const Login = () => {
@@ -12,8 +9,17 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
-    const { authenticate } = useContext(AuthContext);
+    // 2. משכנו גם את ה-user מהקונטקסט כדי לדעת אם מישהו כבר מחובר
+    const { authenticate, user } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // ==== שומר הסף של הלוגין (הגנה מפני החץ "אחורה") ====
+    // אם המערכת מזהה שאת כבר מחוברת, היא בועטת אותך מיד לעמוד שלך 
+    // ה-replace מוחק את העמוד הזה מההיסטוריה כדי שלא תוכלי לחזור אליו שוב!
+    if (user) {
+        return <Navigate to={user.role === 'developer' ? '/developer' : '/lobby'} replace />;
+    }
+    // =====================================================
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
@@ -25,10 +31,12 @@ const Login = () => {
             if (data.success) {
                 authenticate(data.user, data.token);
 
+                // 3. הוספנו את { replace: true } לניווט אחרי התחברות מוצלחת
+                // זה מבטיח שהלוגין נמחק מהיסטוריית הדפדפן מרגע שנכנסת
                 if (data.user.role === 'developer') {
-                    navigate('/developer'); 
+                    navigate('/developer', { replace: true }); 
                 } else {
-                    navigate('/lobby'); 
+                    navigate('/lobby', { replace: true }); 
                 }
             }
         } catch (err) {
@@ -66,7 +74,6 @@ const Login = () => {
                 עדיין אין לך משתמש? <Link to="/register" style={{ color: '#008CBA', fontWeight: 'bold' }}>הירשם כאן</Link>
             </p>
 
-            {/* מודאל השגיאה מחליף את הטקסט האדום הפשוט! */}
             {error && (
                 <Modal 
                     title="שגיאה בהתחברות"

@@ -27,9 +27,13 @@ const getFullRoomDetails = async (roomId) => {
 };
 
 // 3. שליפת אלמנטים מיוחדים שיש באתגר
+// models/roomModel.js
+
+// models/roomModel.js
+
 const getRoomElements = async (roomId) => {
     const query = `
-        SELECT e.id, e.element_type, e.button_label, a.file_url AS asset_url
+        SELECT e.id, e.element_type, e.button_label, a.file_url AS asset_url, e.element_text 
         FROM room_elements e
         LEFT JOIN assets a ON e.asset_id = a.id
         WHERE e.room_id = ?
@@ -37,6 +41,16 @@ const getRoomElements = async (roomId) => {
     const [rows] = await db.query(query, [roomId]);
     return rows;
 };
+// const getRoomElements = async (roomId) => {
+//     const query = `
+//         SELECT e.id, e.element_type, e.button_label, a.file_url AS asset_url
+//         FROM room_elements e
+//         LEFT JOIN assets a ON e.asset_id = a.id
+//         WHERE e.room_id = ?
+//     `;
+//     const [rows] = await db.query(query, [roomId]);
+//     return rows;
+// };
 
 // 4. יצירת אתגר חדש 
 const create = async (title, description, creatorId, coverImageId, bgImageId, bgAudioId, timerSeconds, minPoints, difficulty) => {

@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'AntiqueFont';
+    /* השם כאן חייב להיות זהה לשם הקובץ בתיקייה src/assets/fonts/ */
+    src: url('./Dancing_Script/DancingScript-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

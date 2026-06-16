@@ -21,8 +21,9 @@ const Modal = ({
         <div className={styles.overlay}>
             <div className={styles.modalBox}>
                 <h3 className={styles.title} style={{ color: titleColor }}>{title}</h3>
-                <p className={styles.message}>{message}</p>
-                
+                {/* <p className={styles.message}>{message}</p> */}
+                <div className={styles.message}>{message}</div>
+
                 <div className={styles.buttonGroup}>
                     {/* כפתור אישור / פעולה עיקרית */}
                     <button onClick={onConfirm} className={`${styles.btn} ${confirmClass}`}>

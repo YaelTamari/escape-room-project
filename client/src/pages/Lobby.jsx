@@ -36,7 +36,7 @@ const Lobby = () => {
 
     const handleRoomClick = (room) => {
         if (playerPoints >= room.min_points_required) {
-            navigate(`/room/${room.id}`);
+            navigate(`/play/${room.id}`);
         } else {
             // במקום alert מכוער, מדליקים את הסטייט של המודאל
             setLockedMessage(`החדר נעול! עליך לצבור עוד ${room.min_points_required - playerPoints} נקודות כדי להיכנס.`);
