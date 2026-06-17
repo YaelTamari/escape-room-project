@@ -1,11 +1,10 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react'; // הוספתי את useContext
 import { useParams, useNavigate } from 'react-router-dom';
 import { enterRoom, submitPlayerAnswer, finishPlayerRoom, requestHint } from '../../api/gameApi';
 import Navbar from '../../components/Navbar/Navbar';
 import Modal from '../../components/Modal/Modal';
-import styles from './PlayRoom.module.css'; // ייבוא ה-CSS המופרד
-
- import { AuthContext } from '../../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext'; // הוספתי בחזרה את הקונטקסט של הנקודות!
+import styles from './PlayRoom.module.css';
 
 const PlayRoom = () => {
     const { roomId } = useParams();
@@ -16,13 +15,20 @@ const PlayRoom = () => {
     const [answerInput, setAnswerInput] = useState('');
     const [loading, setLoading] = useState(true);
     const [modalConfig, setModalConfig] = useState(null);
+   //הפעלת השמע
+    const [isMusicStarted, setIsMusicStarted] = useState(false);
 
+    const [showIntro, setShowIntro] = useState(true);
+
+    // מושכים את הפונקציה שמעדכנת נקודות בלייב
     const { updatePoints } = useContext(AuthContext);
+
     useEffect(() => {
         const startGame = async () => {
             try {
                 const res = await enterRoom(roomId);
                 if (res && res.success) {
+                    
                     setGameData(res.gameData);
                 } else {
                     showModal('שגיאה', 'שגיאה בטעינת החדר: ' + (res?.message || ''), 'danger');
@@ -38,39 +44,21 @@ const PlayRoom = () => {
 
     const showModal = (title, message, type, onConfirm = null, onCancel = null, cancelText = null) => {
         setModalConfig({
-            title,
-            message,
-            confirmType: type,
-            cancelText: cancelText,
-            onCancel: onCancel ? () => {
-                setModalConfig(null);
-                onCancel();
-            } : () => setModalConfig(null),
-            onConfirm: () => {
-                setModalConfig(null);
-                if (onConfirm) onConfirm();
-            }
+            title, message, confirmType: type, cancelText,
+            onCancel: onCancel ? () => { setModalConfig(null); onCancel(); } : () => setModalConfig(null),
+            onConfirm: () => { setModalConfig(null); if (onConfirm) onConfirm(); }
         });
     };
 
     const handleExitToLobby = () => {
-        showModal(
-            'השהיית משחק ⏸️',
-            'בטוח שברצונך לצאת ללובי? ההתקדמות שלך (תשובות ורמזים) נשמרה באופן אוטומטי.',
-            'primary',
-            () => navigate('/lobby'),
-            () => {},
-            'הישאר במשחק'
-        );
+        showModal('נסיגה למחנה 🏕️', 'בטוח שברצונך לצאת? ההתקדמות שלך נשמרה ביומן.', 'primary', () => navigate('/lobby'), () => {}, 'הישאר במשחק');
     };
 
     const handleGetHint = async () => {
         const currentQuestion = gameData.questions[currentQuestionIndex];
         try {
             const res = await requestHint(currentQuestion.id);
-            if (res.success) {
-                showModal('רמז 💡', res.hint_text, 'primary');
-            }
+            if (res.success) showModal('לחישה מהאפלה 💡', res.hint_text, 'primary');
         } catch (err) {
             showModal('שגיאה', 'לא הצלחנו למשוך רמז כרגע.', 'danger');
         }
@@ -82,159 +70,153 @@ const PlayRoom = () => {
 
         try {
             const res = await submitPlayerAnswer(currentQuestion.id, answerInput);
-            
+           
             if (res.isCorrect) {
                 setAnswerInput('');
-                
-              // ניקוי השדה // --- הוספנו את השורה הזו שעושה את הקסם! --- 
-               if (res.pointsEarned) 
-                { updatePoints(res.pointsEarned); }
+               
+                // ==== החזרנו את קסם הנקודות! ====
+                if (res.pointsEarned) {
+                    updatePoints(res.pointsEarned);
+                }
+                // =================================
 
                 if (currentQuestionIndex + 1 < gameData.questions.length) {
-                    showModal('כל הכבוד! 🎉', res.message, 'success', () => {
+                    showModal('נתיב חדש נפתח! 🗝️', res.message, 'success', () => {
                         setCurrentQuestionIndex(prev => prev + 1);
                     });
                 } else {
                     await finishPlayerRoom(roomId);
-                    showModal('🏆 אלופים!', 'סיימתם את החדר בהצלחה!', 'success', () => {
-                        navigate('/lobby');
-                    });
+                    showModal('🏆 ניצחון!', 'שרדתם את האתגר ויצאתם לאור!', 'success', () => navigate('/lobby'));
                 }
             } else {
-                showModal('אופס... ❌', res.message, 'danger');
+                showModal('הדרך חסומה ❌', res.message, 'danger');
             }
         } catch (err) {
-            showModal('שגיאה', 'שגיאה בבדיקת התשובה.', 'danger');
+            showModal('שגיאה', 'אפלה ירדה על השרת, נסה שוב.', 'danger');
         }
     };
 
     const handleElementClick = (element) => {
-        console.log("מה יש בתוך האלמנט שנלחץ?", element);
-
         if (element.element_type === 'scroll') {
             const scrollContent = (
-                <div className={styles.scrollPopup}>
-                    {element.element_text} 
+                <div style={{ fontFamily: "'Frank Ruhl Libre', serif", backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', backgroundSize: '100% 100%', padding: '40px', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2c1e0f', fontSize: '24px' }}>
+                    {element.element_text}
                 </div>
             );
             showModal(element.button_label, scrollContent, 'primary');
-
         } else if (element.element_type === 'image') {
-            const imageHtml = (
-                <div className={styles.imagePopupContainer}>
-                    <img 
-                        src={element.asset_url}
-                        alt={element.button_label} 
-                        className={styles.imagePopup}
-                    />
-                </div>
-            );
+            const imageHtml = <div style={{ textAlign: 'center' }}><img src={element.asset_url} alt={element.button_label} style={{ maxWidth: '100%', borderRadius: '8px', border: '2px solid #dfb76c' }} /></div>;
             showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
         }
     };
 
-    if (loading) return <div className={styles.loading}>טוען את החדר ומכין את החידות... ⏳</div>;
+    if (loading) return <div className={styles.loading}>מדליק את הלפידים ופותח את שערי החדר... ⏳</div>;
     if (!gameData || !gameData.questions) return null;
 
+   
     const currentQ = gameData.questions[currentQuestionIndex];
-    const bgUrl = gameData.room.bg_image_url ? `http://localhost:5000${gameData.room.bg_image_url}` : '';
+    
+    // שימוש ב-encodeURI הופך רווחים ואותיות בעברית לנתיב שהדפדפן יודע לקרוא
+    const bgUrl = gameData.room.bg_image_url 
+    ? encodeURI(`http://localhost:5000${gameData.room.bg_image_url}`) 
+    : '';
+    // const bgUrl = gameData.room.bg_image_url ? `http://localhost:5000${gameData.room.bg_image_url}` : '';
+
+    // תיקנתי את הכפילות פה! יש רק משתנה אחד כזה עכשיו.
+    const audioUrl = gameData.room.bg_audio_url ? `http://localhost:5000${gameData.room.bg_audio_url}` : '';
 
     return (
-        <div 
-            className={styles.pageContainer}
-            style={{ backgroundImage: bgUrl ? `url(${bgUrl})` : 'none' }} // רק הרקע הדינמי נשאר inline
-        >
+        <div className={styles.pageContainer} style={{ backgroundImage: bgUrl ? `url("${bgUrl}")` : 'none' }}>
             <Navbar />
+           
+            {/* --- הקסם של המוזיקה קורה כאן! --- */}
             
-            <div className={styles.exitButtonWrapper}>
-                <button onClick={handleExitToLobby} className={styles.exitButton}>
-                    השהה ויצא ללובי ⏸️
-                </button>
-            </div>
+            {isMusicStarted && audioUrl && (
+                <audio src={audioUrl} autoPlay loop />
+)}
+            {/* {audioUrl && (
+                <audio src={audioUrl} autoPlay loop />
+            )} */}
+           
+            {showIntro ? (
+                <div className={styles.introScreen}>
+                    <div className={styles.introBox}>
+                        <h1 className={styles.introTitle}>{gameData.room.title}</h1>
+                        <p className={styles.introDesc}>
+                            {gameData.room.description || "האם תצליחו לפתור את התעלומה ולצאת בזמן?"}
+                        </p>
+                        <button onClick={() => {
+                            setIsMusicStarted(true);
+                            setShowIntro(false); }} className={styles.startBtn}>
+                            היכנס אל הלא נודע 🗝️
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <div className={styles.exitButtonWrapper}>
+                        <button onClick={handleExitToLobby} className={styles.exitButton}>
+                            השהה וחזור לעמוד האתגרים
+                        </button>
+                    </div>
 
-            <div className={styles.gameLayout}>
-                
-                {/* תרמיל עזרים */}
-                <div className={styles.sidebar}>
-                    <h3 className={styles.sidebarTitle}>תרמיל כלים 🎒</h3>
-                    
-                    {(!gameData.elements || gameData.elements.length === 0) ? (
-                        <p className={styles.noElementsText}>אין עזרים מיוחדים בחדר זה.</p>
-                    ) : (
-                        <div className={styles.elementsList}>
-                            {gameData.elements.map(el => {
-                                if (el.element_type === 'hourglass') {
-                                    return (
-                                        <div key={el.id} className={styles.hourglassContainer}>
-                                            <div className={styles.hourglassIcon}>⏳</div>
-                                            <strong className={styles.hourglassLabel}>{el.button_label || 'שעון חול'}</strong>
-                                        </div>
-                                    );
-                                }
-                                return (
-                                    <button 
-                                        key={el.id} 
-                                        onClick={() => handleElementClick(el)}
-                                        className={styles.elementButton}
-                                    >
-                                        <span>{el.element_type === 'scroll' ? '📜' : '🗺️'}</span>
-                                        {el.button_label}
+                    <div className={styles.gameLayout}>
+                        {/* העזרים כעיגולים צפים בצד */}
+                        <div className={styles.sidebarFloating}>
+                            {gameData.elements && gameData.elements.map(el => (
+                                <div key={el.id} onClick={() => handleElementClick(el)} className={styles.elementCircle}>
+                                    <span>{el.element_type === 'scroll' ? '📜' : '🗺️'}</span>
+                                    {el.button_label}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* החידה המרכזית */}
+                        <div key={currentQuestionIndex} className={styles.mainCard}>
+                            <h1 className={styles.roomTitle}>{gameData.room.title}</h1>
+                            <div className={styles.stepIndicator}>
+                                ✦ שלב {currentQuestionIndex + 1} מתוך {gameData.questions.length} ✦
+                            </div>
+                           
+                            {/* רסיס העלילה עם הטקסט המעודכן */}
+                            {currentQ.story_text && (
+                                <div className={styles.loreBox}>
+                                    <h3 className={styles.loreTitle}> הצעד הבא לפתרון האתגר</h3>
+                                    <p className={styles.storyText}>{currentQ.story_text}</p>
+                                </div>
+                            )}
+
+                            <h2 className={styles.questionText}>{currentQ.question_text}</h2>
+
+                            <form onSubmit={handleAnswerSubmit} className={styles.form}>
+                                <input
+                                    type="text"
+                                    value={answerInput}
+                                    onChange={(e) => setAnswerInput(e.target.value)}
+                                    placeholder="הקש את הפתרון שלך כאן..."
+                                    required
+                                    className={styles.inputField}
+                                />
+                               
+                                <div className={styles.actionButtonsRow}>
+                                    <button type="submit" className={styles.submitButton}>
+                                        בדוק תשובה
                                     </button>
-                                );
-                            })}
+                                    <button type="button" onClick={handleGetHint} className={styles.hintButton}>
+                                        רמז
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    )}
-                </div>
-
-                {/* החידה המרכזית */}
-                <div className={styles.mainCard}>
-                    <h1 className={styles.roomTitle}>{gameData.room.title}</h1>
-                    <div className={styles.stepIndicator}>
-                        שלב {currentQuestionIndex + 1} מתוך {gameData.questions.length}
                     </div>
-
-                    <hr className={styles.divider} />
-
-                    <div className={styles.questionBox}>
-                        {currentQ.story_text && (
-                            <p className={styles.storyText}>
-                                {currentQ.story_text}
-                            </p>
-                        )}
-                        <h2 className={styles.questionText}>{currentQ.question_text}</h2>
-                    </div>
-
-                    <form onSubmit={handleAnswerSubmit} className={styles.form}>
-                        <input 
-                            type="text" 
-                            value={answerInput} 
-                            onChange={(e) => setAnswerInput(e.target.value)} 
-                            placeholder="הזן את התשובה שלך כאן..." 
-                            required 
-                            className={styles.inputField}
-                        />
-                        
-                        <div className={styles.actionButtonsRow}>
-                            <button type="submit" className={styles.submitButton}>
-                                בדוק תשובה 🔍
-                            </button>
-                            <button type="button" onClick={handleGetHint} className={styles.hintButton}>
-                                רמז 💡
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
+                </>
+            )}
 
             {modalConfig && (
-                <Modal 
-                    title={modalConfig.title} 
-                    message={modalConfig.message} 
-                    onConfirm={modalConfig.onConfirm} 
-                    confirmType={modalConfig.confirmType}
-                    onCancel={modalConfig.onCancel}
-                    cancelText={modalConfig.cancelText}
+                <Modal
+                    title={modalConfig.title} message={modalConfig.message}
+                    onConfirm={modalConfig.onConfirm} confirmType={modalConfig.confirmType}
+                    onCancel={modalConfig.onCancel} cancelText={modalConfig.cancelText}
                 />
             )}
         </div>
@@ -255,21 +237,14 @@ export default PlayRoom;
 
 
 
+
+
 // import React, { useState, useEffect } from 'react';
 // import { useParams, useNavigate } from 'react-router-dom';
-// import { enterRoom, submitPlayerAnswer, finishPlayerRoom, requestHint } from '../api/gameApi';
-// import Navbar from '../components/Navbar/Navbar';
-// import Modal from '../components/Modal/Modal'; // הייבוא של הפופאפ של יעל
-
-// const scrollStyle = {
-//     fontFamily: "'AntiqueFont', cursive", 
-//     backgroundColor: '#f4e4bc',
-//     padding: '40px',
-//     textAlign: 'center',
-//     borderRadius: '10px',
-//     border: '5px solid #8b4513'
-// };
-
+// import { enterRoom, submitPlayerAnswer, finishPlayerRoom, requestHint } from '../../api/gameApi';
+// import Navbar from '../../components/Navbar/Navbar';
+// import Modal from '../../components/Modal/Modal';
+// import styles from './PlayRoom.module.css';
 
 // const PlayRoom = () => {
 //     const { roomId } = useParams();
@@ -279,9 +254,9 @@ export default PlayRoom;
 //     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 //     const [answerInput, setAnswerInput] = useState('');
 //     const [loading, setLoading] = useState(true);
-
-//     // ניהול חכם של הפופאפים (Modal) - אובייקט אחד שולט בהכל!
 //     const [modalConfig, setModalConfig] = useState(null);
+    
+//     const [showIntro, setShowIntro] = useState(true);
 
 //     useEffect(() => {
 //         const startGame = async () => {
@@ -301,7 +276,214 @@ export default PlayRoom;
 //         startGame();
 //     }, [roomId]);
 
-//     // פונקציית עזר קטנה להקפצת הפופאפ
+//     const showModal = (title, message, type, onConfirm = null, onCancel = null, cancelText = null) => {
+//         setModalConfig({
+//             title, message, confirmType: type, cancelText,
+//             onCancel: onCancel ? () => { setModalConfig(null); onCancel(); } : () => setModalConfig(null),
+//             onConfirm: () => { setModalConfig(null); if (onConfirm) onConfirm(); }
+//         });
+//     };
+
+//     const handleExitToLobby = () => {
+//         showModal('נסיגה למחנה 🏕️', 'בטוח שברצונך לצאת? ההתקדמות שלך נשמרה ביומן.', 'primary', () => navigate('/lobby'), () => {}, 'הישאר במשחק');
+//     };
+
+//     const handleGetHint = async () => {
+//         const currentQuestion = gameData.questions[currentQuestionIndex];
+//         try {
+//             const res = await requestHint(currentQuestion.id);
+//             if (res.success) showModal('לחישה מהאפלה 💡', res.hint_text, 'primary');
+//         } catch (err) {
+//             showModal('שגיאה', 'לא הצלחנו למשוך רמז כרגע.', 'danger');
+//         }
+//     };
+
+//     const handleAnswerSubmit = async (e) => {
+//         e.preventDefault();
+//         const currentQuestion = gameData.questions[currentQuestionIndex];
+
+//         try {
+//             const res = await submitPlayerAnswer(currentQuestion.id, answerInput);
+            
+//             if (res.isCorrect) {
+//                 setAnswerInput('');
+//                 if (currentQuestionIndex + 1 < gameData.questions.length) {
+//                     showModal('נתיב חדש נפתח! 🗝️', res.message, 'success', () => {
+//                         setCurrentQuestionIndex(prev => prev + 1);
+//                     });
+//                 } else {
+//                     await finishPlayerRoom(roomId);
+//                     showModal('🏆 ניצחון!', 'שרדתם את האתגר ויצאתם לאור!', 'success', () => navigate('/lobby'));
+//                 }
+//             } else {
+//                 showModal('הדרך חסומה ❌', res.message, 'danger');
+//             }
+//         } catch (err) {
+//             showModal('שגיאה', 'אפלה ירדה על השרת, נסה שוב.', 'danger');
+//         }
+//     };
+
+//     const handleElementClick = (element) => {
+//         if (element.element_type === 'scroll') {
+//             const scrollContent = (
+//                 <div style={{ fontFamily: "'Frank Ruhl Libre', serif", backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', backgroundSize: '100% 100%', padding: '40px', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2c1e0f', fontSize: '24px' }}>
+//                     {element.element_text} 
+//                 </div>
+//             );
+//             showModal(element.button_label, scrollContent, 'primary');
+//         } else if (element.element_type === 'image') {
+//             const imageHtml = <div style={{ textAlign: 'center' }}><img src={element.asset_url} alt={element.button_label} style={{ maxWidth: '100%', borderRadius: '8px', border: '2px solid #dfb76c' }} /></div>;
+//             showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
+//         }
+//     };
+
+//     if (loading) return <div className={styles.loading}>מדליק את הלפידים ופותח את שערי החדר... ⏳</div>;
+//     if (!gameData || !gameData.questions) return null;
+
+//     const currentQ = gameData.questions[currentQuestionIndex];
+//     const bgUrl = gameData.room.bg_image_url ? `http://localhost:5000${gameData.room.bg_image_url}` : '';
+
+//     const audioUrl = gameData.room.bg_audio_url ? `http://localhost:5000${gameData.room.bg_audio_url}` : '';
+// const audioUrl = gameData.room.bg_audio_url ? `http://localhost:5000${gameData.room.bg_audio_url}` : '';
+//     return (
+//         <div className={styles.pageContainer} style={{ backgroundImage: bgUrl ? `url(${bgUrl})` : 'none' }}>
+//             <Navbar />
+            
+//             {/* --- הקסם של המוזיקה קורה כאן! --- */}
+//             {audioUrl && (
+//                 <audio src={audioUrl} autoPlay loop />
+//             )}
+//             {showIntro ? (
+//                 <div className={styles.introScreen}>
+//                     <div className={styles.introBox}>
+//                         <h1 className={styles.introTitle}>{gameData.room.title}</h1>
+//                         <p className={styles.introDesc}>
+//                             {gameData.room.description || "האם תצליחו לפתור את התעלומה ולצאת בזמן?"}
+//                         </p>
+//                         <button onClick={() => setShowIntro(false)} className={styles.startBtn}>
+//                             היכנס אל הלא נודע 🗝️
+//                         </button>
+//                     </div>
+//                 </div>
+//             ) : (
+//                 <>
+//                     <div className={styles.exitButtonWrapper}>
+//                         <button onClick={handleExitToLobby} className={styles.exitButton}>
+//                             השהה וחזור לעמוד האתגרים                            </button>
+//                     </div>
+
+//                     <div className={styles.gameLayout}>
+//                         {/* העזרים כעיגולים צפים בצד */}
+//                         <div className={styles.sidebarFloating}>
+//                             {gameData.elements && gameData.elements.map(el => (
+//                                 <div key={el.id} onClick={() => handleElementClick(el)} className={styles.elementCircle}>
+//                                     <span>{el.element_type === 'scroll' ? '📜' : '🗺️'}</span>
+//                                     {el.button_label}
+//                                 </div>
+//                             ))}
+//                         </div>
+
+//                         {/* החידה המרכזית */}
+//                         <div key={currentQuestionIndex} className={styles.mainCard}>
+//                             <h1 className={styles.roomTitle}>{gameData.room.title}</h1>
+//                             <div className={styles.stepIndicator}>
+//                                 ✦ שלב {currentQuestionIndex + 1} מתוך {gameData.questions.length} ✦
+//                             </div>
+                            
+//                             {/* רסיס העלילה עם הטקסט המעודכן */}
+//                             {currentQ.story_text && (
+//                                 <div className={styles.loreBox}>
+//                                     <h3 className={styles.loreTitle}> הצעד הבא לפתרון האתגר</h3>
+//                                     <p className={styles.storyText}>{currentQ.story_text}</p>
+//                                 </div>
+//                             )}
+
+//                             <h2 className={styles.questionText}>{currentQ.question_text}</h2>
+
+//                             <form onSubmit={handleAnswerSubmit} className={styles.form}>
+//                                 <input 
+//                                     type="text" 
+//                                     value={answerInput} 
+//                                     onChange={(e) => setAnswerInput(e.target.value)} 
+//                                     placeholder="הקש את הפתרון שלך כאן..." 
+//                                     required 
+//                                     className={styles.inputField}
+//                                 />
+                                
+//                                 <div className={styles.actionButtonsRow}>
+//                                     <button type="submit" className={styles.submitButton}>
+//                                         בדוק תשובה 
+//                                     </button>
+//                                     <button type="button" onClick={handleGetHint} className={styles.hintButton}>
+//                                         רמז 
+//                                     </button>
+//                                 </div>
+//                             </form>
+//                         </div>
+//                     </div>
+//                 </>
+//             )}
+
+//             {modalConfig && (
+//                 <Modal 
+//                     title={modalConfig.title} message={modalConfig.message} 
+//                     onConfirm={modalConfig.onConfirm} confirmType={modalConfig.confirmType}
+//                     onCancel={modalConfig.onCancel} cancelText={modalConfig.cancelText}
+//                 />
+//             )}
+//         </div>
+//     );
+// };
+
+// export default PlayRoom;
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect,useContext } from 'react';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import { enterRoom, submitPlayerAnswer, finishPlayerRoom, requestHint } from '../../api/gameApi';
+// import Navbar from '../../components/Navbar/Navbar';
+// import Modal from '../../components/Modal/Modal';
+// import styles from './PlayRoom.module.css'; // ייבוא ה-CSS המופרד
+
+//  import { AuthContext } from '../../context/AuthContext'
+
+// const PlayRoom = () => {
+//     const { roomId } = useParams();
+//     const navigate = useNavigate();
+
+//     const [gameData, setGameData] = useState(null);
+//     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+//     const [answerInput, setAnswerInput] = useState('');
+//     const [loading, setLoading] = useState(true);
+//     const [modalConfig, setModalConfig] = useState(null);
+
+//     const { updatePoints } = useContext(AuthContext);
+//     useEffect(() => {
+//         const startGame = async () => {
+//             try {
+//                 const res = await enterRoom(roomId);
+//                 if (res && res.success) {
+//                     setGameData(res.gameData);
+//                 } else {
+//                     showModal('שגיאה', 'שגיאה בטעינת החדר: ' + (res?.message || ''), 'danger');
+//                 }
+//             } catch (err) {
+//                 showModal('שגיאה', 'שגיאה בחיבור לשרת או שאין שאלות בחדר הזה.', 'danger');
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
+//         startGame();
+//     }, [roomId]);
+
 //     const showModal = (title, message, type, onConfirm = null, onCancel = null, cancelText = null) => {
 //         setModalConfig({
 //             title,
@@ -313,31 +495,28 @@ export default PlayRoom;
 //                 onCancel();
 //             } : () => setModalConfig(null),
 //             onConfirm: () => {
-//                 setModalConfig(null); // סוגר את הפופאפ
-//                 if (onConfirm) onConfirm(); // מפעיל פעולת המשך אם יש
+//                 setModalConfig(null);
+//                 if (onConfirm) onConfirm();
 //             }
 //         });
 //     };
 
-//     // טיפול ביציאה ללובי
 //     const handleExitToLobby = () => {
 //         showModal(
 //             'השהיית משחק ⏸️',
 //             'בטוח שברצונך לצאת ללובי? ההתקדמות שלך (תשובות ורמזים) נשמרה באופן אוטומטי.',
-//             'primary', // confirmType - צבע כפתור אישור
-//             () => navigate('/lobby'), // onConfirm - הפעולה אם המשתמש מאשר
-//             () => {}, // onCancel - הפעולה אם המשתמש מבטל (רק סוגר את המודאל)
-//             'הישאר במשחק' // cancelText - טקסט לכפתור ביטול
+//             'primary',
+//             () => navigate('/lobby'),
+//             () => {},
+//             'הישאר במשחק'
 //         );
 //     };
 
-//     // בקשת רמז
 //     const handleGetHint = async () => {
 //         const currentQuestion = gameData.questions[currentQuestionIndex];
 //         try {
 //             const res = await requestHint(currentQuestion.id);
 //             if (res.success) {
-//                 // מציג את הרמז בפופאפ
 //                 showModal('רמז 💡', res.hint_text, 'primary');
 //             }
 //         } catch (err) {
@@ -353,15 +532,17 @@ export default PlayRoom;
 //             const res = await submitPlayerAnswer(currentQuestion.id, answerInput);
             
 //             if (res.isCorrect) {
-//                 setAnswerInput(''); // ניקוי השדה
+//                 setAnswerInput('');
                 
-//                 // בודקים אם יש עוד שאלות בחדר
+//               // ניקוי השדה // --- הוספנו את השורה הזו שעושה את הקסם! --- 
+//                if (res.pointsEarned) 
+//                 { updatePoints(res.pointsEarned); }
+
 //                 if (currentQuestionIndex + 1 < gameData.questions.length) {
 //                     showModal('כל הכבוד! 🎉', res.message, 'success', () => {
-//                         setCurrentQuestionIndex(prev => prev + 1); // עוברים לשאלה הבאה רק אחרי שאישרו את הפופאפ
+//                         setCurrentQuestionIndex(prev => prev + 1);
 //                     });
 //                 } else {
-//                     // סיום משחק
 //                     await finishPlayerRoom(roomId);
 //                     showModal('🏆 אלופים!', 'סיימתם את החדר בהצלחה!', 'success', () => {
 //                         navigate('/lobby');
@@ -375,131 +556,74 @@ export default PlayRoom;
 //         }
 //     };
 
-
 //     const handleElementClick = (element) => {
-//     // השארתי את ה-console.log כדי שתוכלי לוודא שאת רואה את השדות הנכונים
-//     console.log("מה יש בתוך האלמנט שנלחץ?", element);
+//         console.log("מה יש בתוך האלמנט שנלחץ?", element);
 
-//     if (element.element_type === 'scroll') {
-//         // עיצוב למגילה (עם הפונט שהגדרנו)
-//         const scrollContent = (
-//             <div style={{ 
-//                 // הקוד של הפונט נשאר כמו שהוא, זה מצוין
-//                 fontFamily: "'AntiqueFont', cursive", 
+//         if (element.element_type === 'scroll') {
+//             const scrollContent = (
+//                 <div className={styles.scrollPopup}>
+//                     {element.element_text} 
+//                 </div>
+//             );
+//             showModal(element.button_label, scrollContent, 'primary');
 
-//                 // הכתובת הזו חייבת להתאים בדיוק למה שהגדרנו בשרת
-//                 backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', 
-                
-//                 backgroundSize: '100% 100%',
-//                 backgroundRepeat: 'no-repeat',
-//                 backgroundPosition: 'center',
-                
-//                 // חשוב: תוודאי שאין הגדרה אחרת של backgroundColor שחוסמת את התמונה
-//                 backgroundColor: 'transparent', 
-                
-//                 padding: '40px',
-//                 minHeight: '200px',
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 color: '#2c1e0f',
-//                 fontSize: '22px'
-//             }}>
-//                 {element.element_text} 
-//             </div>
-//         );
-//         showModal(element.button_label, scrollContent, 'primary');
+//         } else if (element.element_type === 'image') {
+//             const imageHtml = (
+//                 <div className={styles.imagePopupContainer}>
+//                     <img 
+//                         src={element.asset_url}
+//                         alt={element.button_label} 
+//                         className={styles.imagePopup}
+//                     />
+//                 </div>
+//             );
+//             showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
+//         }
+//     };
 
-//     } else if (element.element_type === 'image') {
-//         // תמונה
-//         const imageHtml = (
-//             <div style={{ textAlign: 'center' }}>
-//                 <img 
-//                     src={element.asset_url}  /* תיקון: השם הוא asset_url */
-//                     alt={element.button_label} 
-//                     style={{ maxWidth: '100%', borderRadius: '8px', border: '2px solid #d1d5db' }} 
-//                 />
-//             </div>
-//         );
-//         showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
-//     }
-// };
-
-
-
-
-//     // const handleElementClick = (element) => {
-//     //     console.log("מה יש בתוך האלמנט שנלחץ?", element);
-//     //     if (element.element_type === 'scroll') {
-//     //         // אם זו מגילה, נציג את הטקסט בפופאפ
-//     //         showModal(element.button_label + ' 📜', element.element_text, 'primary');
-//     //     } else if (element.element_type === 'image') {
-//     //         // אם זו תמונה, נציג את התמונה בתוך הפופאפ!
-//     //         const imageHtml = (
-//     //             <div style={{ textAlign: 'center' }}>
-//     //                 <img src={element.file_url} alt={element.button_label} style={{ maxWidth: '100%', borderRadius: '8px', border: '2px solid #d1d5db' }} />
-//     //             </div>
-//     //         );
-//     //         showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
-//     //     }
-//     // };
-
-
-//     if (loading) return <div style={{ textAlign: 'center', marginTop: '100px', fontSize: '24px' }}>טוען את החדר ומכין את החידות... ⏳</div>;
+//     if (loading) return <div className={styles.loading}>טוען את החדר ומכין את החידות... ⏳</div>;
 //     if (!gameData || !gameData.questions) return null;
 
 //     const currentQ = gameData.questions[currentQuestionIndex];
 //     const bgUrl = gameData.room.bg_image_url ? `http://localhost:5000${gameData.room.bg_image_url}` : '';
 
-//    return (
-//         <div style={{ 
-//             minHeight: '100vh', direction: 'rtl', display: 'flex', flexDirection: 'column',
-//             backgroundImage: bgUrl ? `url(${bgUrl})` : 'none', 
-//             backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundColor: '#1f2937' 
-//         }}>
+//     return (
+//         <div 
+//             className={styles.pageContainer}
+//             style={{ backgroundImage: bgUrl ? `url(${bgUrl})` : 'none' }} // רק הרקע הדינמי נשאר inline
+//         >
 //             <Navbar />
             
-//             {/* כפתור היציאה */}
-//             <div style={{ position: 'absolute', top: '80px', left: '20px', zIndex: 10 }}>
-//                 <button 
-//                     onClick={handleExitToLobby}
-//                     style={{ padding: '10px 15px', backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', border: '1px solid #d1d5db', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold', transition: '0.2s' }}
-//                     onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'}
-//                     onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.6)'}
-//                 >
+//             <div className={styles.exitButtonWrapper}>
+//                 <button onClick={handleExitToLobby} className={styles.exitButton}>
 //                     השהה ויצא ללובי ⏸️
 //                 </button>
 //             </div>
 
-//             {/* מעטפת גמישה שמחלקת את המסך לאזור המשחק ולאזור העזרים */}
-//             <div style={{ display: 'flex', flex: 1, padding: '20px', gap: '20px', maxWidth: '1200px', margin: '60px auto 0 auto', width: '100%', alignItems: 'flex-start' }}>
+//             <div className={styles.gameLayout}>
                 
-//                 {/* === העמודה הצדדית (תרמיל העזרים / Sidebar) === */}
-//                 <div style={{ flex: '0 0 280px', backgroundColor: 'rgba(31, 41, 55, 0.85)', padding: '20px', borderRadius: '12px', border: '1px solid #4b5563', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', color: '#f3f4f6' }}>
-//                     <h3 style={{ margin: '0 0 15px 0', borderBottom: '2px solid #6b7280', paddingBottom: '10px', textAlign: 'center' }}>תרמיל כלים 🎒</h3>
+//                 {/* תרמיל עזרים */}
+//                 <div className={styles.sidebar}>
+//                     <h3 className={styles.sidebarTitle}>תרמיל כלים 🎒</h3>
                     
 //                     {(!gameData.elements || gameData.elements.length === 0) ? (
-//                         <p style={{ textAlign: 'center', fontSize: '14px', color: '#9ca3af', fontStyle: 'italic' }}>אין עזרים מיוחדים בחדר זה.</p>
+//                         <p className={styles.noElementsText}>אין עזרים מיוחדים בחדר זה.</p>
 //                     ) : (
-//                         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+//                         <div className={styles.elementsList}>
 //                             {gameData.elements.map(el => {
-//                                 // אם זה שעון חול, מציגים אנימציה/טקסט יפה (בהמשך נכניס כאן ממש אנימציית Lottie)
 //                                 if (el.element_type === 'hourglass') {
 //                                     return (
-//                                         <div key={el.id} style={{ backgroundColor: 'rgba(0,0,0,0.4)', padding: '15px', borderRadius: '8px', textAlign: 'center', border: '1px solid #fbbf24' }}>
-//                                             <div style={{ fontSize: '24px', marginBottom: '5px' }}>⏳</div>
-//                                             <strong style={{ color: '#fbbf24' }}>{el.button_label || 'שעון חול'}</strong>
+//                                         <div key={el.id} className={styles.hourglassContainer}>
+//                                             <div className={styles.hourglassIcon}>⏳</div>
+//                                             <strong className={styles.hourglassLabel}>{el.button_label || 'שעון חול'}</strong>
 //                                         </div>
 //                                     );
 //                                 }
-//                                 // אם זה מגילה או תמונה, זה כפתור לחיץ
 //                                 return (
 //                                     <button 
 //                                         key={el.id} 
 //                                         onClick={() => handleElementClick(el)}
-//                                         style={{ padding: '12px', backgroundColor: '#374151', color: '#f3f4f6', border: '1px solid #6b7280', borderRadius: '8px', cursor: 'pointer', fontSize: '15px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px', transition: '0.2s' }}
-//                                         onMouseOver={(e) => e.target.style.backgroundColor = '#4b5563'}
-//                                         onMouseOut={(e) => e.target.style.backgroundColor = '#374151'}
+//                                         className={styles.elementButton}
 //                                     >
 //                                         <span>{el.element_type === 'scroll' ? '📜' : '🗺️'}</span>
 //                                         {el.button_label}
@@ -510,39 +634,39 @@ export default PlayRoom;
 //                     )}
 //                 </div>
 
-//                 {/* === העמודה המרכזית (החידה עצמה) === */}
-//                 <div style={{ flex: '1', backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}>
-//                     <h1 style={{ color: '#8b5cf6', textAlign: 'center', margin: '0 0 10px 0' }}>{gameData.room.title}</h1>
-//                     <div style={{ textAlign: 'center', marginBottom: '20px', color: '#4b5563', fontWeight: 'bold', fontSize: '18px' }}>
+//                 {/* החידה המרכזית */}
+//                 <div className={styles.mainCard}>
+//                     <h1 className={styles.roomTitle}>{gameData.room.title}</h1>
+//                     <div className={styles.stepIndicator}>
 //                         שלב {currentQuestionIndex + 1} מתוך {gameData.questions.length}
 //                     </div>
 
-//                     <hr style={{ borderColor: '#e5e7eb', marginBottom: '20px' }} />
+//                     <hr className={styles.divider} />
 
-//                     <div style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #d1d5db' }}>
+//                     <div className={styles.questionBox}>
 //                         {currentQ.story_text && (
-//                             <p style={{ color: '#374151', marginBottom: '15px', fontStyle: 'italic', fontSize: '16px', lineHeight: '1.5' }}>
+//                             <p className={styles.storyText}>
 //                                 {currentQ.story_text}
 //                             </p>
 //                         )}
-//                         <h2 style={{ margin: '0', color: '#111827' }}>{currentQ.question_text}</h2>
+//                         <h2 className={styles.questionText}>{currentQ.question_text}</h2>
 //                     </div>
 
-//                     <form onSubmit={handleAnswerSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+//                     <form onSubmit={handleAnswerSubmit} className={styles.form}>
 //                         <input 
 //                             type="text" 
 //                             value={answerInput} 
 //                             onChange={(e) => setAnswerInput(e.target.value)} 
 //                             placeholder="הזן את התשובה שלך כאן..." 
 //                             required 
-//                             style={{ padding: '15px', borderRadius: '8px', border: '2px solid #d1d5db', fontSize: '18px' }}
+//                             className={styles.inputField}
 //                         />
                         
-//                         <div style={{ display: 'flex', gap: '10px' }}>
-//                             <button type="submit" style={{ flex: 1, padding: '15px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}>
+//                         <div className={styles.actionButtonsRow}>
+//                             <button type="submit" className={styles.submitButton}>
 //                                 בדוק תשובה 🔍
 //                             </button>
-//                             <button type="button" onClick={handleGetHint} style={{ padding: '15px 25px', backgroundColor: '#f59e0b', color: 'white', border: 'none', borderRadius: '8px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}>
+//                             <button type="button" onClick={handleGetHint} className={styles.hintButton}>
 //                                 רמז 💡
 //                             </button>
 //                         </div>

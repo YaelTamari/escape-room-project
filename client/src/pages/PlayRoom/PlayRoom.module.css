@@ -1,7 +1,16 @@
+/* PlayRoom.module.css */
+
+/* מייבאים פונט עתיק ויוקרתי מגוגל פונטס */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
 .loading {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 100vh;
+    transform: translateY(-50%);
     font-size: 24px;
+    color: #dfb76c;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.8);
 }
 
 .pageContainer {
@@ -12,234 +21,332 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-color: #1f2937;
+    background-color: #020617;
+    /* גיבוי חשוך במיוחד */
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.exitButtonWrapper {
+/* === מסך הפתיחה הקולנועי === */
+.introScreen {
     position: absolute;
-    top: 80px;
-    left: 20px;
-    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(2, 6, 23, 0.85);
+    /* חשוך ומסתורי */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500;
+    padding: 20px;
 }
 
-.exitButton {
-    padding: 10px 15px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
+.introBox {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.95));
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    /* תאורה אחורית עדינה מאחורי התיבה */
+    box-shadow: 0 0 60px rgba(30, 58, 138, 0.4), inset 0 0 30px rgba(0, 0, 0, 0.8);
+    padding: 60px 50px;
+    border-radius: 24px;
+    max-width: 750px;
+    text-align: center;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.introTitle {
+    color: #dfb76c;
+    font-size: 42px;
+    margin: 0 0 25px 0;
+    /* זהב עם הילה כחולה עמוקה מאחוריו שחודרת כל תמונה */
+    text-shadow: 0 0 15px rgba(30, 58, 138, 1), 0 0 30px rgba(30, 58, 138, 0.8);
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.introDesc {
+    color: #e2e8f0;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 45px;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* === כפתורים אלגנטיים ועגולים (צורת קפסולה/Pill) === */
+.startBtn {
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(30, 58, 138, 0.6));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    padding: 18px 50px;
+    font-size: 20px;
     font-weight: bold;
-    transition: background-color 0.2s ease;
+    border-radius: 50px;
+    /* הופך את זה לאלגנטי וזורם */
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(30, 58, 138, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 1px;
 }
 
-.exitButton:hover {
-    background-color: rgba(0, 0, 0, 0.9);
+.startBtn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(2, 6, 23, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(223, 183, 108, 0.3);
 }
 
+/* === אזור המשחק === */
 .gameLayout {
     display: flex;
     flex: 1;
     padding: 20px;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 60px auto 0 auto;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 40px auto;
     width: 100%;
     align-items: flex-start;
+    justify-content: center; /* ממרכז את התוכן הכללי בעמוד */
 }
 
-/* === עמודת תרמיל הכלים === */
-.sidebar {
-    flex: 0 0 280px;
-    background-color: rgba(31, 41, 55, 0.85);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #4b5563;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    color: #f3f4f6;
-}
-
-.sidebarTitle {
-    margin: 0 0 15px 0;
-    border-bottom: 2px solid #6b7280;
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.noElementsText {
-    text-align: center;
-    font-size: 14px;
-    color: #9ca3af;
-    font-style: italic;
-}
-
-.elementsList {
+/* בר הכלים המרחף (החלפנו את התיבה בעיגולים מרחפים) */
+.sidebarFloating {
+    flex: 0 0 100px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-
-.hourglassContainer {
-    background-color: rgba(0,0,0,0.4);
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid #fbbf24;
-}
-
-.hourglassIcon {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-.hourglassLabel {
-    color: #fbbf24;
-}
-
-.elementButton {
-    padding: 12px;
-    background-color: #374151;
-    color: #f3f4f6;
-    border: 1px solid #6b7280;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-    display: flex;
     align-items: center;
-    gap: 10px;
-    transition: background-color 0.2s ease;
+    gap: 25px;
+    padding-top: 20px;
 }
 
-.elementButton:hover {
-    background-color: #4b5563;
+.elementCircle {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    /* צורת עיגול מושלמת */
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(223, 183, 108, 0.4);
+    color: #dfb76c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-/* === עמודת החידה המרכזית === */
+.elementCircle span {
+    font-size: 26px;
+    /* האימוג'י גדול יותר */
+    margin-bottom: 4px;
+}
+
+.elementCircle:hover {
+    transform: scale(1.1);
+    border-color: #dfb76c;
+    box-shadow: 0 1px 25px rgba(244, 215, 215, 0.7), 0 0 20px rgba(223, 183, 108, 0.4);
+}
+
+/* החידה (תיבה ראשית עם תאורה אחורית) */
 .mainCard {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    flex: 0 0 60%; /* תופס בדיוק 60% מהעמוד, לא יותר ולא פחות */
+    background: rgba(10, 15, 25, 0.55); /* הגברת שקיפות כדי שיראו יותר את רקע החדר */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 50px;
+    border-radius: 24px;
+    border: 1px solid rgba(223, 183, 108, 0.2);
+    /* התאורה האחורית והזוהרת עליה דיברת! */
+    box-shadow: 0 0 80px rgba(15, 23, 42, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.8);
+    animation: fadeIn 1.0s ease-out; /* מפעיל את האנימציה בכל פעם שהשאלה מתחלפת בזכות ה-key ב-JSX */
 }
 
 .roomTitle {
-    color: #8b5cf6;
+    color: #dfb76c;
     text-align: center;
     margin: 0 0 10px 0;
+    font-size: 32px;
+    font-family: 'Frank Ruhl Libre', serif;
+    /* המסגרת הכחולה העדינה ששומרת עליו בולט */
+    text-shadow: 0 0 15px rgba(30, 58, 138, 1), 0 0 25px rgba(30, 58, 138, 0.6);
 }
 
 .stepIndicator {
     text-align: center;
-    margin-bottom: 20px;
-    color: #4b5563;
-    font-weight: bold;
-    font-size: 18px;
+    margin-bottom: 30px;
+    color: #94a3b8;
+    font-size: 16px;
+    letter-spacing: 2px;
 }
 
-.divider {
-    border: 0;
-    border-top: 1px solid #e5e7eb;
-    margin-bottom: 20px;
+/* החלק של "הצעד הבא לפיתוח האתגר" - שודרג למראה שקוף וזוהר */
+.loreBox {
+    background: rgba(223, 183, 108, 0.03); /* רקע שקוף ועדין */
+    border: 1px solid rgba(223, 183, 108, 0.25); /* מסגרת זהב שלמה ודקה במקום הבורדר הימני */
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 35px;
+    position: relative;
+    /* תאורה זהובה אחורית מהממת והילה פנימית */
+    box-shadow: 0 0 25px rgba(223, 183, 108, 0.15), inset 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.questionBox {
-    background-color: #f9fafb;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #d1d5db;
+.loreTitle {
+    color: #dfb76c;
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-family: 'Frank Ruhl Libre', serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center; /* ממקם את כותרת הבלוק באמצע */
 }
 
 .storyText {
-    color: #374151;
-    margin-bottom: 15px;
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.questionText {
+    color: #e2e8f0;
     margin: 0;
-    color: #111827;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.inputField {
-    padding: 15px;
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
     font-size: 18px;
+    line-height: 1.7;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-align: center; /* ממקם את הטקסט של הסיפור באמצע */
 }
 
+/* השאלה עצמה */
+.questionText {
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* שדה הקלט - כהה ואלגנטי */
+.inputField {
+    padding: 20px 25px;
+    border-radius: 15px;
+    /* עגול ואלגנטי */
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    color: #dfb76c;
+    font-size: 18px;
+    text-align: center;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    width: 90%;
+}
+
+.inputField::placeholder {
+    color: #64748b;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #dfb76c;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(223, 183, 108, 0.15);
+}
+
+/* שורת הכפתורים: כחול-כהה-שקוף עם זהב */
 .actionButtonsRow {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    margin-top: 25px;
+    justify-content: center;
+    width: 100%;
 }
 
+/* כפתור שליחת תשובה - מקבל משקל גדול יותר */
 .submitButton {
-    flex: 1;
-    padding: 15px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
+    flex: 3; /* תופס שטח גדול יותר מהרמז */
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.8), rgba(30, 58, 138, 0.5));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    border-radius: 50px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 1px;
+}
+
+/* כפתור הרמז - שומר על העיצוב המקורי אך קטן יותר משמעותית בגודלו הכללי */
+.hintButton {
+    flex: 1.5; /* קטן יותר באופן ניכר מכפתור ה-submit */
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.8), rgba(30, 58, 138, 0.5));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 1px;
 }
 
 .submitButton:hover {
-    background-color: #2563eb;
-}
-
-.hintButton {
-    padding: 15px 25px;
-    background-color: #f59e0b;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.7), rgba(2, 6, 23, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(223, 183, 108, 0.3);
+    transform: translateY(-2px);
 }
 
 .hintButton:hover {
-    background-color: #d97706;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.7), rgba(2, 6, 23, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(223, 183, 108, 0.3);
+    transform: translateY(-2px);
 }
 
-/* === עיצובים מיוחדים לפופאפים של האלמנטים === */
-.scrollPopup {
-    font-family: 'AntiqueFont', cursive;
-    background-image: url("http://localhost:5000/assets/popup/מגילה.jpg");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: transparent;
-    padding: 40px;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2c1e0f;
-    font-size: 22px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
 }
 
-.imagePopupContainer {
-    text-align: center;
+.exitButtonWrapper {
+    position: absolute;
+    top: 90px;
+    left: 30px;
+    z-index: 10;
 }
 
-.imagePopup {
-    max-width: 100%;
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
+.exitButton {
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #cbd5e1;
+    border: 1px solid #4b5563;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.exitButton:hover {
+    color: #dfb76c;
+    border-color: #dfb76c;
+    background: rgba(0, 0, 0, 0.8);
 }

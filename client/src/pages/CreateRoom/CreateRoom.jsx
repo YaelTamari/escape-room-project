@@ -31,7 +31,7 @@ const CreateRoom = () => {
             const roomDataForServer = {
                 ...formData,
                 timer_seconds: formData.timer_minutes * 60,
-                bg_audio_id: null
+                // bg_audio_id: null
             };
 
             const data = await createRoom(roomDataForServer);

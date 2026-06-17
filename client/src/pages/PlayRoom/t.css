@@ -1,0 +1,478 @@
+/* --- שילוב פונטים ועיצובים מ-t.css --- */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
+.pageContainer {
+    min-height: 100vh;
+    direction: rtl;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #020617; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* --- מבנה ה-Layout המוקשח (כדי שלא יזוז) --- */
+.gameLayout {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 50px;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* הבר הצידי - נשאר מימין */
+.sidebar {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* הקופסה המרכזית - בדיוק 60% מהרוחב, עומק וצללים */
+.mainCard {
+    flex: 0 0 60%;
+    background: rgba(10, 15, 25, 0.85);
+    backdrop-filter: blur(15px);
+    padding: 50px;
+    border-radius: 25px;
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(223, 183, 108, 0.15);
+    text-align: center;
+    animation: fadeInSlide 0.6s ease-out;
+}
+
+/* כותרת זהב מ-t.css */
+.roomTitle {
+    color: #dfb76c;
+    font-size: 36px;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.8);
+    margin-bottom: 25px;
+}
+
+/* --- כפתורים אליפטיים (Pill Shape) משודרגים --- */
+.actionButtonsRow {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.submitButton, .hintButton {
+    flex: 1;
+    padding: 16px 30px;
+    border-radius: 50px; /* אליפסה מושלמת */
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #dfb76c;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.submitButton {
+    background: linear-gradient(135deg, #dfb76c, #a88a4e);
+    color: #020617;
+}
+
+.hintButton {
+    background: rgba(2, 6, 23, 0.6);
+    color: #dfb76c;
+}
+
+.submitButton:hover {
+    box-shadow: 0 0 20px rgba(223, 183, 108, 0.4);
+    transform: translateY(-2px);
+}
+
+/* אלמנטים */
+.elementCircle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #dfb76c;
+    color: #dfb76c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    transition: 0.3s;
+}
+
+.elementCircle:hover {
+    transform: scale(1.1);
+    background: rgba(223, 183, 108, 0.1);
+}
+
+.inputField {
+    width: 100%;
+    padding: 20px;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* אנימציית כניסה */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intro Screen מהקובץ t.css - לא למחוק! */
+.introScreen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(2, 6, 23, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PlayRoom.module.css */
+
+/* מייבאים פונט עתיק ויוקרתי מגוגל פונטס */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
+.loading {
+    text-align: center;
+    margin-top: 100vh;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #dfb76c;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.8);
+}
+
+.pageContainer {
+    min-height: 100vh;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #020617; /* גיבוי חשוך במיוחד */
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === מסך הפתיחה הקולנועי === */
+.introScreen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(2, 6, 23, 0.85); /* חשוך ומסתורי */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500;
+    padding: 20px;
+}
+
+.introBox {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.95));
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    /* תאורה אחורית עדינה מאחורי התיבה */
+    box-shadow: 0 0 60px rgba(30, 58, 138, 0.4), inset 0 0 30px rgba(0, 0, 0, 0.8);
+    padding: 60px 50px;
+    border-radius: 24px;
+    max-width: 750px;
+    text-align: center;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.introTitle {
+    color: #dfb76c;
+    font-size: 42px;
+    margin: 0 0 25px 0;
+    /* זהב עם הילה כחולה עמוקה מאחוריו שחודרת כל תמונה */
+    text-shadow: 0 0 15px rgba(30, 58, 138, 1), 0 0 30px rgba(30, 58, 138, 0.8);
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.introDesc {
+    color: #e2e8f0;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 45px;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* === כפתורים אלגנטיים ועגולים (צורת קפסולה/Pill) === */
+.startBtn {
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(30, 58, 138, 0.6));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    padding: 18px 50px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50px; /* הופך את זה לאלגנטי וזורם */
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(30, 58, 138, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 1px;
+}
+
+.startBtn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(2, 6, 23, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(223, 183, 108, 0.3);
+}
+
+/* === אזור המשחק === */
+.gameLayout {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 40px auto;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* בר הכלים המרחף (החלפנו את התיבה בעיגולים מרחפים) */
+.sidebarFloating {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding-top: 20px;
+}
+
+.elementCircle {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%; /* צורת עיגול מושלמת */
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(223, 183, 108, 0.4);
+    color: #dfb76c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.elementCircle span {
+    font-size: 26px; /* האימוג'י גדול יותר */
+    margin-bottom: 4px;
+}
+
+.elementCircle:hover {
+    transform: scale(1.1);
+    background: rgba(30, 58, 138, 0.6);
+    border-color: #dfb76c;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 20px rgba(223, 183, 108, 0.4);
+}
+
+/* החידה (תיבה ראשית עם תאורה אחורית) */
+.mainCard {
+    flex: 1;
+    background: rgba(10, 15, 25, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 50px;
+    border-radius: 24px;
+    border: 1px solid rgba(223, 183, 108, 0.2);
+    /* התאורה האחורית והזוהרת עליה דיברת! */
+    box-shadow: 0 0 80px rgba(15, 23, 42, 0.8), inset 0 0 30px rgba(0,0,0,0.8);
+}
+
+.roomTitle {
+    color: #dfb76c;
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 32px;
+    font-family: 'Frank Ruhl Libre', serif;
+    /* המסגרת הכחולה העדינה ששומרת עליו בולט */
+    text-shadow: 0 0 15px rgba(30, 58, 138, 1), 0 0 25px rgba(30, 58, 138, 0.6);
+}
+
+.stepIndicator {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #94a3b8;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+/* החלק של "הצעד הבא לפיתוח האתגר" */
+.loreBox {
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(223, 183, 108, 0.05));
+    border-right: 3px solid #dfb76c;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 35px;
+    position: relative;
+}
+
+.loreTitle {
+    color: #dfb76c;
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-family: 'Frank Ruhl Libre', serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.storyText {
+    color: #e2e8f0;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.7;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* השאלה עצמה */
+.questionText {
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+/* שדה הקלט - כהה ואלגנטי */
+.inputField {
+    padding: 20px 25px;
+    border-radius: 50px; /* עגול ואלגנטי */
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    color: #dfb76c;
+    font-size: 18px;
+    text-align: center;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+    margin-bottom: 15px;
+}
+
+.inputField::placeholder {
+    color: #64748b;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #dfb76c;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.8), 0 0 20px rgba(223, 183, 108, 0.15);
+}
+
+/* שורת הכפתורים: כחול-כהה-שקוף עם זהב */
+.actionButtonsRow {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.submitButton {
+    flex: 2;
+    padding: 16px;
+    /* השילוב שביקשת: כחול עמוק, שחור שקוף וזהב */
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.8), rgba(30, 58, 138, 0.5));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    transition: all 0.3s ease;
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 1px;
+}
+
+.submitButton:hover {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.7), rgba(2, 6, 23, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(223, 183, 108, 0.3);
+    transform: translateY(-2px);
+}
+
+.hintButton {
+    flex: 1;
+    padding: 16px;
+    background: rgba(2, 6, 23, 0.6);
+    color: #94a3b8;
+    border: 1px solid #4b5563;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.hintButton:hover {
+    color: #fcd34d;
+    border-color: #fcd34d;
+    background: rgba(2, 6, 23, 0.9);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); filter: blur(5px); }
+    to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+.exitButtonWrapper { position: absolute; top: 90px; left: 30px; z-index: 10; }
+.exitButton { padding: 10px 20px; background: rgba(0,0,0,0.6); color: #cbd5e1; border: 1px solid #4b5563; border-radius: 30px; cursor: pointer; transition: 0.3s; font-family: 'Frank Ruhl Libre', serif; }
+.exitButton:hover { color: #dfb76c; border-color: #dfb76c; background: rgba(0,0,0,0.8); }

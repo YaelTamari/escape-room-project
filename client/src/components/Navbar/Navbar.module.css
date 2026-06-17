@@ -1,104 +1,113 @@
 /* Navbar.module.css */
 
+/* ייבוא פונטים מגוגל - שילוב של פונט עתיק חריף ופונט נקי יוקרתי */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&display=swap');
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 40px;
+    padding: 18px 50px;
     
-    /* אפקט זכוכית שקופה בגוון יער מסתורי עמוק */
-    background: rgba(12, 22, 17, 0.75); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* רקע יער עמוק פסטורלי בשילוב אפקט זכוכית חלומית */
+    background: linear-gradient(135deg, rgba(10, 26, 18, 0.82), rgba(15, 23, 42, 0.9)); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     
-    /* מסגרת זהב עתיק עדינה מאוד בתחתית */
-    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    /* מסגרת זהב עתיק דקה ועדינה בתחתית */
+    border-bottom: 1px solid rgba(223, 183, 108, 0.25);
     
-    /* צל רך ועמוק שנותן תחושת תלת-מימד מעל הרקע */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    /* צל רך ועמוק שנותן תחושת עומק מעל החדר */
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
     
-    /* מקבע את הנאבר למעלה בזמן גלילה */
     position: sticky;
     top: 0;
     z-index: 1000;
+    direction: rtl;
+    font-family: 'Assistant', sans-serif;
 }
 
+/* אזור הלוגו והניווט */
 .logoContainer {
     display: flex;
-    gap: 30px;
+    gap: 35px;
     align-items: center;
 }
 
 .logo {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    /* צבע זהב קוסמי זוהר */
-    color: #dfb76c;
-    letter-spacing: 1.5px;
-    text-shadow: 0 0 15px rgba(223, 183, 108, 0.35);
-    font-family: 'Cinzel', 'Georgia', serif; /* פונט בסגנון משחקי פנטזיה/מסתורין */
-}
-
-.userSection {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-
-.greeting {
-    font-size: 16px;
-    color: #94a3b8; /* אפור עמוק ונקי */
-}
-
-.username {
-    color: #f1f5f9;
-    font-weight: 600;
-    border-bottom: 1px dashed rgba(241, 245, 249, 0.3);
-    padding-bottom: 2px;
-}
-
-.pointsBadge {
-    font-size: 15px;
-    font-weight: bold;
-    color: #fbbf24;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(217, 119, 6, 0.05));
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: 1px solid rgba(251, 191, 36, 0.4);
-    box-shadow: inset 0 0 10px rgba(251, 191, 36, 0.05), 0 0 15px rgba(251, 191, 36, 0.1);
+    font-family: 'Frank Ruhl Libre', serif; /* פונט מסתורי עתיק */
+    color: #dfb76c; /* זהב מלכותי */
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
     letter-spacing: 0.5px;
 }
 
-/* כפתורי הניווט - מעוצבים ככפתורי פרימיום נקיים */
+/* כפתורי ניווט כלליים (כמו ספר שחקן) */
 .navButton {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 15px;
-    color: #cbd5e1;
-    padding: 8px 16px;
+    background: rgba(223, 183, 108, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    padding: 10px 20px;
     border-radius: 8px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .navButton:hover {
-    color: #dfb76c;
-    background: rgba(223, 183, 108, 0.08);
-    border-color: rgba(223, 183, 108, 0.4);
-    box-shadow: 0 0 15px rgba(223, 183, 108, 0.1);
+    background: rgba(223, 183, 108, 0.15);
+    color: #fff;
+    border-color: #dfb76c;
+    box-shadow: 0 0 15px rgba(223, 183, 108, 0.25);
+    transform: translateY(-1px);
 }
 
+/* אזור המשתמש בצד שמאל */
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.greeting {
+    font-size: 15px;
+    color: #94a3b8;
+}
+
+.username {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* תג הנקודות היוקרתי - קריסטל זוהר בעדינות */
+.pointsBadge {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fbbf24;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(217, 119, 6, 0.03));
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* כפתור התנתקות - במקום אדום זועק: צבע ענבר/ברונזה עמוק, יוקרתי ורגוע */
 .logoutButton {
-    color: #f87171;
-    background: rgba(239, 68, 68, 0.03);
-    border-color: rgba(239, 68, 68, 0.1);
+    background: rgba(217, 119, 6, 0.05);
+    color: #fdba74; /* גוון אפרסק/ענבר עדין */
+    border: 1px solid rgba(217, 119, 6, 0.3);
 }
 
 .logoutButton:hover {
-    color: #ffffff;
-    background: #ef4444;
-    border-color: #ef4444;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    background: rgba(217, 119, 6, 0.15);
+    color: #fff;
+    border-color: #fdba74;
+    box-shadow: 0 0 15px rgba(217, 119, 6, 0.2);
 }

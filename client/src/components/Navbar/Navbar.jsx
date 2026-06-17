@@ -16,14 +16,14 @@ const Navbar = ({ showProfile = false }) => {
         <nav className={styles.navbar}>
             <div className={styles.logoContainer}>
                 <h2 className={styles.logo}>
-                    {user?.role === 'developer' ? '⚙️ סטודיו מפתחים' : 'EscapeMaster'}
+                    {user?.role === 'developer' ? ' סטודיו מפתחים' : 'EscapeMaster'}
                 </h2>
                 
-                {showProfile && (
+                {/* {showProfile && (
                     <button onClick={() => navigate('/profile')} className={styles.navButton}>
                         ספר שחקן 📜
                     </button>
-                )}
+                )} */}
             </div>
             
             <div className={styles.userSection}>
