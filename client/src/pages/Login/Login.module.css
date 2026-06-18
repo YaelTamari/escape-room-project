@@ -1,50 +1,134 @@
-.authContainer {
-    max-width: 400px;
-    margin: 50px auto;
+
+/* תופס את כל המסך וממרכז את הטופס באמצע */
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #121212; /* רקע כהה לשמירה על אווירה במידה ואין תמונה */
+    background-image: url('http://localhost:5000/assets/images/עיר קסומה.webp'); /* רקע אווירה */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+/* הקופסה השקופה-כהה של הטופס */
+.authBox {
+    background: rgba(20, 20, 20, 0.85); /* צבע כהה עם שקיפות */
+    border: 2px solid #dfb76c; /* מסגרת זהב */
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px; /* רספונסיביות - לא יעבור את הרוחב הזה במחשב */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
     text-align: center;
-    font-family: sans-serif;
+    color: #f1f1f1;
+    backdrop-filter: blur(5px); /* אפקט טשטוש עדין למה שמאחורי הקופסה */
+}
+
+.title {
+    color: #dfb76c;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 20px;
 }
 
-.inputField {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+/* עיצוב שדות ההזנה (Inputs) והבחירה (Select) */
+.inputField, .selectField {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #555;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.submitButton {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 6px;
+.inputField::placeholder {
+    color: #aaa;
+}
+
+/* אפקט זהב כשלוחצים על השדה */
+.inputField:focus, .selectField:focus {
+    border-color: #dfb76c;
+    box-shadow: 0 0 8px rgba(223, 183, 108, 0.5);
+}
+
+.roleWrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 8px;
+}
+
+.roleLabel {
+    color: #dfb76c;
     font-weight: bold;
-    transition: background-color 0.2s;
+    font-size: 0.95rem;
+}
+
+.selectField option {
+    background: #222;
+    color: #fff;
+}
+
+/* כפתור אישור */
+.submitButton {
+    background: linear-gradient(135deg, #c28b36, #dfb76c);
+    color: #121212;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .submitButton:hover {
-    background-color: #439a46;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
+    background: linear-gradient(135deg, #dfb76c, #c28b36);
 }
 
 .footerText {
-    margin-top: 20px;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #bbb;
 }
 
-.registerLink {
-    color: #008CBA;
-    font-weight: bold;
+.link {
+    color: #dfb76c;
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-.registerLink:hover {
+.link:hover {
+    color: #fff;
     text-decoration: underline;
+}
+
+/* ==== התאמה למסכי טלפון קטנים ==== */
+@media (max-width: 480px) {
+    .authBox {
+        padding: 30px 20px;
+    }
+    .title {
+        font-size: 1.6rem;
+    }
+    .submitButton {
+        font-size: 1.1rem;
+    }
 }

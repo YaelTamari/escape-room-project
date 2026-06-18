@@ -1,21 +1,33 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
 .pageContainer {
-    background-color: #f3f4f6;
     min-height: 100vh;
-    font-family: sans-serif;
     direction: rtl;
+    background-color: #020617; /* צבע כהה אחיד */
+    background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.15), transparent 60%);
+    padding-bottom: 50px;
+    font-family: 'Frank Ruhl Libre', serif;
 }
 
 .contentWrapper {
-    padding: 40px 20px;
+    background: rgba(10, 15, 25, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(223, 183, 108, 0.2);
+    border-radius: 24px;
+    padding: 50px;
+    box-shadow: 0 0 80px rgba(15, 23, 42, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.8);
+    max-width: 600px;
+    margin: 40px auto;
 }
 
 .errorMessage {
-    max-width: 800px;
-    margin: 0 auto 20px auto;
-    background-color: #fee2e2;
-    color: #ef4444;
-    padding: 10px;
-    border-radius: 6px;
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 25px;
     text-align: center;
-    font-weight: bold;
+    font-size: 16px;
 }

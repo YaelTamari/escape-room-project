@@ -1,77 +1,260 @@
+/* DeveloperDashboard.module.css */
+
+/* ייבוא הפונט היוקרתי והקולנועי מגוגל פונטס */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
 .loading {
     text-align: center;
-    margin-top: 50px;
-    font-size: 20px;
+    margin-top: 45vh;
+    font-size: 26px;
+    color: #dfb76c;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.6);
 }
 
 .dashboardContainer {
-    background-color: #f3f4f6;
+    background-color: #020617; /* רקע חשוך עמוק ויוקרתי כמו הלובי */
     min-height: 100vh;
-    font-family: sans-serif;
-    color: #1f2937;
+    color: #f8fafc;
+    direction: rtl;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .mainContent {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 60px 20px;
 }
 
+/* === כרטיסיית הניהול העליונה (Header Card) === */
 .headerCard {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.25)); 
+    border: 1px solid rgba(223, 183, 108, 0.25); 
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 0 35px rgba(30, 58, 138, 0.45), inset 0 0 15px rgba(223, 183, 108, 0.05); 
+    margin-bottom: 50px;
+    backdrop-filter: blur(8px);
 }
 
 .headerTitle {
-    margin: 0 0 10px 0;
-    font-size: 28px;
+    margin: 0 0 12px 0;
+    font-size: 34px;
+    color: #dfb76c; 
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px rgba(223, 183, 108, 0.2);
 }
 
 .headerSubtitle {
     margin: 0;
-    color: #6b7280;
+    color: #94a3b8;
+    font-size: 16px;
 }
 
+/* === כפתור יצירת אתגר חדש === */
 .createButton {
-    background-color: #8b5cf6;
-    color: white;
-    border: none;
-    padding: 15px 30px;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(2, 6, 23, 0.9));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
+    padding: 14px 28px;
     font-size: 18px;
-    border-radius: 8px;
+    border-radius: 50px; 
     cursor: pointer;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(139, 92, 246, 0.3);
+    font-family: 'Frank Ruhl Libre', serif;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(30, 58, 138, 0.5);
+    transition: all 0.3s ease;
 }
 
-.errorMessage {
-    color: red;
-    text-align: center;
+.createButton:hover {
+    background: linear-gradient(135deg, rgba(223, 183, 108, 0.2), rgba(30, 58, 138, 0.6));
+    border-color: #dfb76c;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(223, 183, 108, 0.4), 0 0 15px rgba(30, 58, 138, 0.8);
+    transform: translateY(-3px);
 }
 
+/* === כותרת "היצירות שלי" === */
 .sectionTitle {
-    font-size: 22px;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    color: #dfb76c; 
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: bold;
+    text-align: center; 
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    position: relative;
+    text-shadow: 
+        0 0 10px rgba(223, 183, 108, 0.5),   
+        0 0 25px rgba(30, 58, 138, 0.9),     
+        0 0 45px rgba(30, 58, 138, 0.6);     
 }
 
-.emptyState {
-    text-align: center;
-    padding: 50px;
-    background-color: white;
-    border-radius: 12px;
-    color: #9ca3af;
+.sectionTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(30, 58, 138, 0.8), #dfb76c, rgba(30, 58, 138, 0.8), transparent);
+    box-shadow: 0 0 8px rgba(30, 58, 138, 0.8);
 }
 
+/* === גריד כרטיסיות המשחק === */
 .roomsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 35px; 
+    justify-content: center;
+}
+
+/* ==========================================================================
+   ✨ עיצוב מחדש מטורף לכרטיסיות האתגרים (מעודכן: רקע אפלולי שקוף) ✨
+   ========================================================================== */
+
+.roomsGrid > div, 
+.roomsGrid :global(.roomCard) {
+    /* שינוי לרקע שקוף, אפלולי ועמוק כמו שביקשת */
+    background: rgba(15, 23, 42, 0.55) !important; 
+    border: 1px solid rgba(223, 183, 108, 0.25) !important; 
+    border-radius: 20px !important; /* פינות מעוגלות ועדינות יותר */
+    overflow: hidden !important;
+    color: #f8fafc !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important; 
+    backdrop-filter: blur(8px) !important; /* אפקט זכוכית אפלולית */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; 
+}
+
+/* אפקט ריחוף (Hover) עם תאורה אחורית כחולה עשירה ויוקרתית */
+.roomsGrid > div:hover,
+.roomsGrid :global(.roomCard):hover {
+    transform: translateY(-8px) scale(1.01) !important; 
+    border-color: rgba(223, 183, 108, 0.7) !important; 
+    background: rgba(15, 23, 42, 0.7) !important; 
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.8), 
+        0 0 30px rgba(30, 58, 138, 0.85), 
+        0 0 15px rgba(223, 183, 108, 0.2) !important; 
+}
+
+/* עיצוב הטקסטים בתוך הכרטיסייה */
+.roomsGrid h3, 
+.roomsGrid :global(.roomName),
+.roomsGrid :global(.roomTitle) {
+    color: #dfb76c !important; 
+    font-family: 'Frank Ruhl Libre', serif !important;
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+.roomsGrid p, 
+.roomsGrid :global(.roomDescription),
+.roomsGrid span {
+    color: #cbd5e1 !important; 
+    font-size: 15px !important;
+}
+
+/* ==========================================================================
+   🎨 עיצוב מחדש מוחלט לכפתורים בתוך הכרטיסייה (עגולים, כחול וזהב) 🎨
+   ========================================================================== */
+
+/* בורר כללי לכל הכפתורים בשורת הכפתורים התחתונה של הכרטיסייה */
+.roomsGrid button,
+.roomsGrid :global(.roomCard) button {
+    border-radius: 50px !important; /* הופך את כל הכפתורים לעגולים מושלמים */
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    font-family: 'Segoe UI', sans-serif !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 1. כפתור "ניהול חידות" (במקור הסגול) - הופך לכחול עמוק מלכותי עם מסגרת זהב */
+.roomsGrid button:first-child,
+.roomsGrid :global(.roomCard) button:last-child { 
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.9), rgba(15, 23, 42, 0.9)) !important;
+    color: #dfb76c !important;
+    border: 1px solid rgba(223, 183, 108, 0.6) !important;
+}
+
+.roomsGrid button:first-child:hover,
+.roomsGrid :global(.roomCard) button:last-child:hover {
+    background: linear-gradient(135deg, #dfb76c, rgba(30, 58, 138, 0.8)) !important;
+    color: #020617 !important; /* הופך את הטקסט לחשוך בריחוף */
+    border-color: #dfb76c !important;
+    box-shadow: 0 0 15px rgba(30, 58, 138, 0.8), 0 0 10px rgba(223, 183, 108, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 2. כפתור "עריכה" (במקור הלבן) - הופך לאפלולי שקוף עם מסגרת כחולה עדינה */
+.roomsGrid button:nth-child(2),
+.roomsGrid :global(.roomCard) button:nth-child(2) {
+    background: rgba(30, 58, 138, 0.25) !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(30, 58, 138, 0.7) !important;
+}
+
+.roomsGrid button:nth-child(2):hover,
+.roomsGrid :global(.roomCard) button:nth-child(2) {
+    background: rgba(30, 58, 138, 0.6) !important;
+    border-color: #dfb76c !important;
+    color: #dfb76c !important;
+    box-shadow: 0 0 12px rgba(30, 58, 138, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 3. כפתור "מחיקה" (במקור האדום) - הופך לעיצוב אזהרה יוקרתי, חשוך עם מסגרת אדומה עמוקה */
+.roomsGrid button:last-child,
+.roomsGrid :global(.roomCard) button:first-child {
+    background: rgba(239, 68, 68, 0.08) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}
+
+.roomsGrid button:last-child:hover,
+.roomsGrid :global(.roomCard) button:first-child:hover {
+    background: #ef4444 !important;
+    color: white !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ========================================================================== */
+
+/* === הודעת שגיאה === */
+.errorMessage {
+    color: #f87171;
+    text-align: center;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* === מצב ריק === */
+.emptyState {
+    text-align: center;
+    padding: 60px 30px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px dashed rgba(223, 183, 108, 0.3);
+    border-radius: 16px;
+    color: #94a3b8;
+    font-size: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
 }

@@ -350,3 +350,30 @@
     border-color: #dfb76c;
     background: rgba(0, 0, 0, 0.8);
 }
+
+
+.scrollPopupContent {
+    font-family: 'Frank Ruhl Libre', serif;
+    background-image: url("http://localhost:5000/assets/popup/מגילה.jpg");
+    background-size: 100% 100%;
+    padding: 40px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2c1e0f;
+    font-size: 24px;
+}
+
+.imagePopupWrapper {
+    text-align: center;
+}
+
+.popupImage {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.popupError {
+    color: #ef4444; /* צבע אדום נעים לעין */
+}

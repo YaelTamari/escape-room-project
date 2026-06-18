@@ -141,7 +141,6 @@ export default function RoomElementsManager({ roomId }) {
                                 <span className="element-info">
                                     {el.element_type === 'scroll' && '📜 '}
                                     {el.element_type === 'image' && '🗺️ '}
-                                    {el.element_type === 'hourglass' && '⏳ '}
                                     <strong className="element-label">{el.button_label}</strong>
                                 </span>
                                 <button onClick={() => handleDelete(el.id)} className="element-delete-btn">
@@ -180,7 +179,6 @@ export default function RoomElementsManager({ roomId }) {
                     >
                         <option value="scroll">📜 מגילה עתיקה (הזנת טקסט חופשי)</option>
                         <option value="image">🗺️ תמונה מוכנה / מפה מהמאגר</option>
-                        <option value="hourglass">⏳ שעון חול (סנכרון דינמי לטיימר)</option>
                     </select>
                 </div>
 
@@ -216,11 +214,7 @@ export default function RoomElementsManager({ roomId }) {
                     </div>
                 )}
 
-                {elementType === 'hourglass' && (
-                    <p className="helper-text">
-                        💡 אין צורך בקובץ או טקסט. המערכת תציג שעון חול אינטראקטיבי שמסונכרן עם הזמן שנותר לחדר.
-                    </p>
-                )}
+                
 
                 <button type="submit" className="submit-btn">
                     + הוסף אלמנט לחדר

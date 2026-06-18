@@ -114,7 +114,7 @@ const DeveloperDashboard = () => {
             {successMessage && (
                 <Modal 
                     title="פעולה הושלמה"
-                    titleColor="#10b981"
+                    titleColor="#dfb76c"
                     message={successMessage}
                     confirmText="המשך"
                     confirmType="success"
