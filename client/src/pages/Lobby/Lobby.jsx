@@ -72,8 +72,15 @@ const Lobby = () => {
                 {rooms.map((room) => {
                     const isLocked = playerPoints < room.min_points_required;
                    
+                    // const defaultImage = "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop";
+                    // const imageUrl = room.cover_image_url ? `http://localhost:5000/${room.image_url}` : defaultImage;
+
                     const defaultImage = "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop";
-                    const imageUrl = room.cover_image_url ? `http://localhost:5000/${room.image_url}` : defaultImage;
+
+                    // תיקון: משתמשים ב-cover_image_url, מורידים את הסלאש המיותר, ועוטפים ב-encodeURI בשביל העברית!
+                    const imageUrl = room.cover_image_url 
+                        ? encodeURI(`http://localhost:5000${room.cover_image_url}`) 
+                        : defaultImage;
 
                     return (
                         <div

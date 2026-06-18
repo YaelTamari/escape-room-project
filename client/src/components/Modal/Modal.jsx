@@ -9,29 +9,38 @@ const Modal = ({
     confirmText = "אישור", 
     cancelText = "ביטול", 
     confirmType = "primary", // יכול להיות: primary, danger, success
+    showCancel = false,
     titleColor = "#111827" 
 }) => {
-    
+    const isScroll = confirmType === 'scroll';
     // בוחרים את המחלקה (CSS) המתאימה לסוג הכפתור שביקשנו
     const confirmClass = confirmType === 'danger' ? styles.dangerBtn 
                        : confirmType === 'success' ? styles.successBtn 
+                       : confirmType === 'scroll' ? styles.scrollCloseBtn
                        : styles.primaryBtn;
 
-    return (
+   return (
         <div className={styles.overlay}>
-            <div className={styles.modalBox}>
-                <h3 className={styles.title} style={{ color: titleColor }}>{title}</h3>
-                {/* <p className={styles.message}>{message}</p> */}
+            {/* אם זו מגילה, נוסיף מחלקה מיוחדת שמבטלת את הרקע והמסגרת לחלוטין */}
+            <div className={`${styles.modalBox} ${isScroll ? styles.scrollBox : ''}`}>
+                
+                {/* מציגים את הכותרת הכללית רק אם זו לא מגילה */}
+                {!isScroll && title && (
+                    <h3 className={styles.title} style={{ color: titleColor || '#dfb76c' }}>
+                        {title}
+                    </h3>
+                )}
+                
                 <div className={styles.message}>{message}</div>
 
                 <div className={styles.buttonGroup}>
                     {/* כפתור אישור / פעולה עיקרית */}
                     <button onClick={onConfirm} className={`${styles.btn} ${confirmClass}`}>
-                        {confirmText}
+                        {isScroll ? "סגור מגילה 📜" : confirmText}
                     </button>
 
-                    {/* כפתור ביטול (יוצג רק אם העבירו לו פונקציית ביטול) */}
-                    {onCancel && (
+                    {/* כפתור ביטול - יוצג אך ורק אם showCancel הוא true */}
+                    {showCancel && (
                         <button onClick={onCancel} className={`${styles.btn} ${styles.cancelBtn}`}>
                             {cancelText}
                         </button>

@@ -31,19 +31,58 @@ export default function RoomElementsManager({ roomId }) {
         loadRoomData();
     }, [roomId]);
 
-    // 2. משיכת תמונות מהשרת באופן אוטומטי כשבוחרים בסוג "תמונה/מפה"
+    // 2. משיכת תמונות פופ-אפ מהשרת באופן אוטומטי כשבוחרים בסוג "תמונה/מפה"
     useEffect(() => {
         if (elementType === 'image') {
-            fetch('/api/assets?type=image')
+            // אנחנו פשוט מבקשים מהשרת type=popup, והדאטה-בייס עושה את כל העבודה!
+            fetch('http://localhost:5000/api/assets?type=popup')
                 .then(res => res.json())
                 .then(data => {
-                    if (data.success) {
-                        setAssets(data.assets);
+                    if (data.success && data.assets) {
+                        setAssets(data.assets); // הנתונים מגיעים מושלמים ומסונכרנים ישר לטופס
                     }
                 })
                 .catch(err => console.error("שגיאה בטעינת המאגר:", err));
         }
     }, [elementType]);
+
+
+    // 2. משיכת תמונות מהשרת באופן אוטומטי כשבוחרים בסוג "תמונה/מפה"
+    // useEffect(() => {
+    //     if (elementType === 'image') {
+    //         fetch('/api/assets?type=image')
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 if (data.success) {
+    //                     setAssets(data.assets);
+    //                 }
+    //             })
+    //             .catch(err => console.error("שגיאה בטעינת המאגר:", err));
+    //     }
+    // }, [elementType]);
+
+
+
+    // useEffect(() => {
+    //     if (elementType === 'image') {
+    //         // 1. הוספנו את הכתובת המלאה של השרת בפורט 5000
+    //         fetch('http://localhost:5000/api/assets?type=image')
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 if (data.success && data.assets) {
+                        
+    //                     // 2. סינון פרונטאנד: משאירים רק תמונות שהנתיב שלהן מכיל את התיקייה popup
+    //                     // (תבדקי אם אצלך בשדה קוראים לזה asset_url, file_url או path)
+    //                     const popupOnly = data.assets.filter(asset => 
+    //                         asset.file_url && asset.file_url.includes('/popup/')
+    //                     );
+                        
+    //                     setAssets(popupOnly);
+    //                 }
+    //             })
+    //             .catch(err => console.error("שגיאה בטעינת המאגר:", err));
+    //     }
+    // }, [elementType]);
 
     // שמירת אלמנט חדש
     const handleAddElement = async (e) => {

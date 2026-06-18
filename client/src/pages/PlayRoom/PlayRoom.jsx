@@ -45,7 +45,7 @@ const PlayRoom = () => {
     const showModal = (title, message, type, onConfirm = null, onCancel = null, cancelText = null) => {
         setModalConfig({
             title, message, confirmType: type, cancelText,
-            onCancel: onCancel ? () => { setModalConfig(null); onCancel(); } : () => setModalConfig(null),
+            showCancel: onCancel !== null && onCancel !== undefined && onCancel.toString() !== '() => {}',            onCancel: onCancel ? () => { setModalConfig(null); onCancel(); } : () => setModalConfig(null),
             onConfirm: () => { setModalConfig(null); if (onConfirm) onConfirm(); }
         });
     };
@@ -103,9 +103,14 @@ const PlayRoom = () => {
                     {element.element_text}
                 </div>
             );
-            showModal(element.button_label, scrollContent, 'primary');
+            showModal(element.button_label, scrollContent, 'scroll');
         } else if (element.element_type === 'image') {
-            const imageHtml = <div style={{ textAlign: 'center' }}><img src={element.asset_url} alt={element.button_label} style={{ maxWidth: '100%', borderRadius: '8px', border: '2px solid #dfb76c' }} /></div>;
+            const imageHtml = <div style={{ textAlign: 'center' }}>
+                <img 
+                    src={`http://localhost:5000${element.file_url || element.file_path}`} 
+                    alt={element.button_label || "element"} 
+                    className={styles.popupImage} 
+                />                </div>;
             showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
         }
     };
@@ -217,6 +222,7 @@ const PlayRoom = () => {
                     title={modalConfig.title} message={modalConfig.message}
                     onConfirm={modalConfig.onConfirm} confirmType={modalConfig.confirmType}
                     onCancel={modalConfig.onCancel} cancelText={modalConfig.cancelText}
+                    showCancel={modalConfig.showCancel}
                 />
             )}
         </div>

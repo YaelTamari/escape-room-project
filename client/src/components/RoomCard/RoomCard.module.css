@@ -1,5 +1,26 @@
 /* RoomCard.module.css */
 
+.imageWrapper {
+    width: 100%;
+    height: 160px; /* גובה קבוע לתמונה בכרטיס */
+    overflow: hidden;
+    border-radius: 8px 8px 0 0; /* מעגל רק את הפינות העליונות */
+    margin-bottom: 12px;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* חותך ומתאים את התמונה בצורה פרופורציונלית בלי לעוות אותה */
+    transition: transform 0.3s ease;
+}
+
+/* אפקט נחמד: כשהעכבר מעל הכרטיס, התמונה גדלה מעט */
+.card:hover .cardImage {
+    transform: scale(1.05);
+}
+
+
 .card {
     background-color: white;
     padding: 20px;

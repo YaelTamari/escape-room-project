@@ -1,93 +1,158 @@
 /* Modal.module.css */
 
-/* המסך השחור והשקוף שחוסם את הרקע */
+/* מייבאים את הפונט העתיק גם למודלים */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
+/* מסך הרקע הכהה שמכסה את כל המשחק כשהמודל נפתח */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
+    right: 0;
+    bottom: 0;
+    background-color: rgba(2, 6, 23, 0.75); /* רקע כחול-כהה חצי שקוף */
+    backdrop-filter: blur(8px); /* אפקט טשטוש יפהפה של החדר מאחור */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    /* אנימציה של הופעה רכה */
-    animation: fadeIn 0.2s ease-in-out;
+    z-index: 1000; /* מוודא שהפופ-אפ תמיד יהיה מעל הכל */
+    direction: rtl;
 }
 
-/* הריבוע הלבן של ההודעה */
+/* התיבה המרכזית של הפופ-אפ */
 .modalBox {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #0f172a, #020617); /* רקע כחול כהה עמוק שתואם לחדר */
+    border: 1px solid rgba(223, 183, 108, 0.3); /* מסגרת זהב עדינה */
+    border-radius: 24px; /* פינות עגולות ואלגנטיות */
+    padding: 45px 40px;
+    max-width: 550px;
+    width: 90%;
     text-align: center;
-    max-width: 400px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    animation: slideUp 0.3s ease-out;
+    /* הילה כחולה וצל עמוק מאחורי התיבה */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(30, 58, 138, 0.3);
+    animation: modalAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* אנימציית קפיצה קלה */
 }
 
+/* הגדרה מיוחדת למגילה העתיקה - מבטלת את התיבה הרגילה כדי שיראו רק את תמונת הקלף */
+.scrollBox {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 700px;
+}
+
+/* --- כאן קורה הקסם של הכותרות! --- */
 .title {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 22px;
+    color: #dfb76c !important; /* זהב יוקרתי, בולט ומאיר עיניים! */
+    font-size: 28px;
+    margin: 0 0 20px 0;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); /* צל שחור מאחורי האותיות כדי להבליט אותן */
 }
 
+/* הטקסט הפנימי של הפופ-אפ (למשל: "בטוח שברצונך לצאת?") */
 .message {
-    color: #4b5563;
-    line-height: 1.5;
-    margin-bottom: 25px;
+    color: #f8fafc; /* לבן-אפרפר בהיר ורך, הכי קריא שיש על רקע כהה */
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* שורת הכפתורים בתחתית המודל */
 .buttonGroup {
     display: flex;
     gap: 15px;
     justify-content: center;
+    width: 100%;
 }
 
-/* כפתורים גנריים למודאל */
+/* עיצוב בסיסי לכפתורי המודל (צורת קפסולה עגולה כמו בחדר) */
 .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    padding: 12px 35px;
+    font-size: 16px;
     font-weight: bold;
-    font-size: 15px;
-    transition: opacity 0.2s ease;
+    border-radius: 50px; /* עגול ואלגנטי */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Frank Ruhl Libre', serif;
 }
 
-.btn:hover {
-    opacity: 0.85;
-}
-
-/* צבעי כפתורים ודינמיות */
-.cancelBtn {
-    background: #6b7280;
-    color: #fff;
-}
-
+/* כפתור אישור רגיל / כפתור ראשוני */
 .primaryBtn {
-    background: #3b82f6; /* כחול רגיל */
-    color: #fff;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(2, 6, 23, 0.9));
+    color: #dfb76c;
+    border: 1px solid rgba(223, 183, 108, 0.5);
 }
 
+.primaryBtn:hover {
+    background: linear-gradient(135deg, rgba(223, 183, 108, 0.2), rgba(30, 58, 138, 0.9));
+    border-color: #dfb76c;
+    box-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
+    transform: translateY(-1px);
+}
+
+/* כפתור אזהרה (אדום) */
 .dangerBtn {
-    background: #ef4444; /* אדום לאזהרה/מחיקה */
-    color: #fff;
+    background: linear-gradient(135deg, #7f1d1d, #450a0a);
+    color: #fca5a5;
+    border: 1px solid #ef4444;
 }
 
+.dangerBtn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+/* כפתור הצלחה (ירוק) */
 .successBtn {
-    background: #10b981; /* ירוק לשמירה */
-    color: #fff;
+    background: linear-gradient(135deg, #064e3b, #022c22);
+    color: #6ee7b7;
+    border: 1px solid #10b981;
 }
 
-/* אנימציות הופעה */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.successBtn:hover {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
 }
 
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+/* כפתור סגירת המגילה המיוחד (חום כהה עתיק שמתאים למגילת הקלף) */
+.scrollCloseBtn {
+    background: #2c1e0f;
+    color: #dfb76c;
+    border: 1px solid #dfb76c;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.scrollCloseBtn:hover {
+    background: #dfb76c;
+    color: #2c1e0f;
+}
+
+/* כפתור ביטול (למשל: "הישאר במשחק") */
+.cancelBtn {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border: 1px solid #475569;
+}
+
+.cancelBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* אנימציה חלקה לכניסת המודל מלמעלה למטה */
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }

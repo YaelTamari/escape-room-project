@@ -13,7 +13,8 @@ const BASE_ASSETS_DIR = path.join(__dirname, 'public', 'assets');
 // מיפוי התיקיות הפיזיות לסוג ה-ENUM המתאים בבסיס הנתונים
 const foldersToScan = [
     { name: 'images', type: 'image' },
-    { name: 'audio', type: 'audio' }
+    { name: 'audio', type: 'audio' },
+    { name: 'popup', type: 'popup' }
 ];
 
 async function seedAssets() {

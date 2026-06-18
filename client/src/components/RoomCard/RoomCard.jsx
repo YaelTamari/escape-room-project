@@ -5,6 +5,18 @@ import styles from './RoomCard.module.css';
 const RoomCard = ({ room, onManage, onEdit, onDelete }) => {
     return (
         <div className={styles.card}>
+
+            {/* 1. הוספת תמונת החדר ללובי - משתמשת בכתובת המלאה ומטפלת ברווחים ועברית */}
+            {room.cover_image_url && (
+                <div className={styles.imageWrapper}>
+                    <img 
+                        src={encodeURI(`http://localhost:5000${room.cover_image_url}`)} 
+                        alt={room.title} 
+                        className={styles.cardImage} 
+                    />
+                </div>
+            )}
+
             <h3 className={styles.title}>{room.title}</h3>
             
             <p className={styles.timer}>

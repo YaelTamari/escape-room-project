@@ -1,15 +1,27 @@
 import db from '../config/db.js';
 
 // 1. שליפת כל האתגרים (ללובי של השחקנים)
+// const getAllRooms = async () => {
+//     const query = `
+//         SELECT rooms.*, cover_assets.file_url AS cover_image_url 
+//         FROM rooms 
+//         LEFT JOIN assets AS cover_assets ON rooms.cover_image_id = cover_assets.id
+//     `;
+//     const [rows] = await db.query(query);
+//     return rows;
+// };
+
+
 const getAllRooms = async () => {
     const query = `
-        SELECT rooms.*, cover_assets.file_url AS cover_image_url 
+        SELECT rooms.*, bg_assets.file_url AS cover_image_url 
         FROM rooms 
-        LEFT JOIN assets AS cover_assets ON rooms.cover_image_id = cover_assets.id
+        LEFT JOIN assets AS bg_assets ON rooms.bg_image_id = bg_assets.id
     `;
     const [rows] = await db.query(query);
     return rows;
 };
+
 
 // 2. שליפת פרטי אתגר המלאים (כששחקן נכנס לשחק)
 const getFullRoomDetails = async (roomId) => {

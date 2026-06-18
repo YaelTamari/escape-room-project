@@ -60,7 +60,8 @@ export const getAssetsPaginated = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 100; // מושכים עד 100 נכסים כדי שהכל יופיע בטופס
-        const type = req.query.type; 
+        const type = req.query.type;
+        const folder = req.query.folder; 
         const offset = (page - 1) * limit;
 
         // 1. ספירה - משתמשים בשם העמודה המדויק מהתמונה: asset_type
