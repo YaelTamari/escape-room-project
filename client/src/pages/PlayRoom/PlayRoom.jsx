@@ -97,6 +97,9 @@ const PlayRoom = () => {
     };
 
     const handleElementClick = (element) => {
+    // הדפסה זמנית לקונסול כדי שתוכלי לראות בדיוק אילו שדות מגיעים מהשרת!
+        console.log("האלמנט שנלחץ:", element);
+
         if (element.element_type === 'scroll') {
             const scrollContent = (
                 <div style={{ fontFamily: "'Frank Ruhl Libre', serif", backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', backgroundSize: '100% 100%', padding: '40px', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2c1e0f', fontSize: '24px' }}>
@@ -104,16 +107,50 @@ const PlayRoom = () => {
                 </div>
             );
             showModal(element.button_label, scrollContent, 'scroll');
-        } else if (element.element_type === 'image') {
-            const imageHtml = <div style={{ textAlign: 'center' }}>
-                <img 
-                    src={`http://localhost:5000${element.file_url || element.file_path}`} 
-                    alt={element.button_label || "element"} 
-                    className={styles.popupImage} 
-                />                </div>;
+        } 
+        else if (element.element_type === 'image') {
+            // 1. חילוץ נתיב הקובץ מכל שדה אפשרי שהשרת עשוי להחזיר
+            const rawPath = element.file_url || element.file_path || element.asset_url || element.path;
+            
+            // 2. בניית הכתובת המלאה ושימוש ב-encodeURI חובה עבור עברית ורווחים!
+            const fullUrl = rawPath ? encodeURI(`http://localhost:5000${rawPath}`) : '';
+
+            const imageHtml = (
+                <div style={{ textAlign: 'center' }}>
+                    {fullUrl ? (
+                        <img 
+                            src={fullUrl} 
+                            alt={element.button_label || "element"} 
+                            className={styles.popupImage} 
+                            style={{ maxWidth: '100%', borderRadius: '8px' }}
+                        />
+                    ) : (
+                        <p style={{ color: 'red' }}>שגיאה: לא נמצא נתיב קובץ תקין באלמנט</p>
+                    )}
+                </div>
+            );
             showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
         }
     };
+
+    // const handleElementClick = (element) => {
+    //     if (element.element_type === 'scroll') {
+    //         const scrollContent = (
+    //             <div style={{ fontFamily: "'Frank Ruhl Libre', serif", backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', backgroundSize: '100% 100%', padding: '40px', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2c1e0f', fontSize: '24px' }}>
+    //                 {element.element_text}
+    //             </div>
+    //         );
+    //         showModal(element.button_label, scrollContent, 'scroll');
+    //     } else if (element.element_type === 'image') {
+    //         const imageHtml = <div style={{ textAlign: 'center' }}>
+    //             <img 
+    //                 src={`http://localhost:5000${element.file_url || element.file_path}`} 
+    //                 alt={element.button_label || "element"} 
+    //                 className={styles.popupImage} 
+    //             />                </div>;
+    //         showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
+    //     }
+    // };
 
     if (loading) return <div className={styles.loading}>מדליק את הלפידים ופותח את שערי החדר... ⏳</div>;
     if (!gameData || !gameData.questions) return null;

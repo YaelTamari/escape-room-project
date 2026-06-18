@@ -12,7 +12,7 @@ const CreateRoom = () => {
     const [formData, setFormData] = useState({
         title: '', description: '', timer_minutes: 15,
         difficulty_level: 1, min_points_required: 0,
-        cover_image_id: 1, bg_image_id: 1     
+        cover_image_id: 5, bg_image_id: 5     
     });
 
     const [error, setError] = useState('');
@@ -32,6 +32,7 @@ const CreateRoom = () => {
                 ...formData,
                 timer_seconds: formData.timer_minutes * 60,
                 // bg_audio_id: null
+                cover_image_id: formData.bg_image_id
             };
 
             const data = await createRoom(roomDataForServer);
