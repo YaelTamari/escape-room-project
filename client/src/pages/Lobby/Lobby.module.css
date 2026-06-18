@@ -1,36 +1,44 @@
+/* Lobby.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+
 .loading {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    backgroundColor: #0f172a;
-    color: #60a5fa;
+    background-color: #020617;
+    color: #dfb76c;
     font-size: 24px;
-    font-family: sans-serif;
+    font-family: 'Frank Ruhl Libre', serif;
+    text-shadow: 0 0 15px rgba(223, 183, 108, 0.8);
 }
 
 .lobbyContainer {
-    background-color: #0f172a;
+    background-color: #020617; /* צבע רקע חשוך קולנועי תואם לפליירום */
     min-height: 100vh;
     color: #f8fafc;
-    font-family: system-ui, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rlt;
 }
 
 .headerSection {
     text-align: center;
-    padding: 50px 20px 30px;
+    padding: 60px 20px 40px;
 }
 
 .title {
-    font-size: 42px;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 46px;
     margin: 0 0 15px 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #dfb76c; /* כותרת זהב מלכותית */
+    text-shadow: 0 0 15px rgba(30, 58, 138, 1), 0 0 25px rgba(30, 58, 138, 0.6);
 }
 
 .subtitle {
+    font-family: 'Frank Ruhl Libre', serif;
     color: #94a3b8;
-    font-size: 18px;
-    max-width: 600px;
+    font-size: 20px;
+    max-width: 650px;
     margin: 0 auto;
 }
 
@@ -47,68 +55,143 @@
 .roomsGrid {
     display: flex;
     justify-content: center;
-    gap: 35px;
+    gap: 40px;
     flex-wrap: wrap;
-    padding: 0 40px 60px;
-    max-width: 1200px;
+    padding: 0 40px 80px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
-/* עיצובים דינמיים של כרטיסיית חדר */
+/* === כרטיסיית חדר בסיסית === */
 .roomCard {
-    width: 320px;
-    background-color: #1e293b;
-    border-radius: 16px;
+    width: 330px;
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.55), rgba(2, 6, 23, 0.85));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+/* מצב רגיל - החדר פתוח ומקרין אור כחול פנימי עדין */
+.cardUnlocked {
+    border: 1px solid rgba(223, 183, 108, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 
+                inset 0 0 20px rgba(30, 58, 138, 0.25); /* תאורה כחולה פנימית עמומה */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(30, 58, 138, 0.2);
+}
+
+/* מצב מעבר עכבר - אפקט תאורת ניאון כחולה ואלוהית מאחורי הכרטיסייה */
+.cardUnlocked:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #dfb76c;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 
+                0 0 30px rgba(30, 58, 138, 0.65), /* תאורה אחורית כחולה שפורצת החוצה מהקצוות */
+                inset 0 0 25px rgba(30, 58, 138, 0.4); /* הגברת האור הכחול בפנים */
+}
+/* מצב חדר נעול */
+.cardLocked {
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    opacity: 0.65;
+    filter: grayscale(85%);
+    cursor: not-allowed;
+}
+
+.cardLocked:hover {
+    transform: translateY(-2px);
+    opacity: 0.75;
 }
 
 .imageArea {
-    height: 200px;
+    height: 210px;
     position: relative;
+    overflow: hidden;
 }
 
 .roomImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
+.cardUnlocked:hover .roomImage {
+    transform: scale(1.08); /* אפקט זום קל ויוקרתי בריחוק מעבר עכבר */
+}
+
+/* === עיצוב התגים (באדג') === */
 .badge {
     position: absolute;
     top: 15px;
     right: 15px;
-    font-size: 24px;
-    background-color: rgba(15, 23, 42, 0.85);
+    font-size: 22px;
+    background-color: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(5px);
     width: 45px;
     height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
 
+.badgeUnlocked {
+    border: 1px solid #dfb76c;
+    text-shadow: 0 0 8px rgba(223, 183, 108, 0.6);
+}
+
+.badgeLocked {
+    border: 1px solid #475569;
+}
 .detailsArea {
-    padding: 25px 20px;
+    padding: 25px 22px;
+    text-align: center; /* ממרכז את כל שורות הטקסט קומפלט */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ממרכז אלמנטים מורכבים כמו השורה התחתונה */
 }
 
+/* === כותרות החדר === */
 .roomTitle {
-    margin: 0 0 10px 0;
-    font-size: 22px;
+    margin: 0 0 12px 0;
+    font-size: 24px;
+    font-family: 'Frank Ruhl Libre', serif;
+    transition: color 0.3s ease;
+}
+.titleUnlocked {
+    color: #dfb76c; /* צבע זהב עתיק */
+    text-shadow: 0 0 10px rgba(30, 58, 138, 1), 0 0 20px rgba(30, 58, 138, 0.7); /* אפקט תאורה כחולה אחורית לפונט */
+}
+
+.cardUnlocked:hover .titleUnlocked {
+    color: #dfb76c; /* הופך לזהב עדין במעבר עכבר */
+}
+
+.titleLocked {
+    color: #cbd5e1;
 }
 
 .roomTimer {
     color: #94a3b8;
-    font-size: 14px;
+    font-size: 15px;
     margin: 0 0 20px 0;
 }
-
 .footerRow {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center; /* ממרכז את שני התגים יחד */
+    gap: 25px; /* שומר על רווח קבוע ואסתטי ביניהם */
+    width: 100%;
     padding-top: 15px;
+}
+.footerUnlocked {
+    border-top: 1px solid rgba(223, 183, 108, 0.2);
+}
+
+.footerLocked {
+    border-top: 1px solid rgba(51, 65, 85, 0.5);
 }
 
 .difficulty {
@@ -124,4 +207,47 @@
 .pointsStatus {
     font-size: 15px;
     font-weight: bold;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.pointsUnlocked {
+    color: #4ade80;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+}
+
+.pointsLocked {
+    color: #f87171;
+}
+
+
+
+/* כפתור הורדת תעודה מעוצב ברוח עתיקה ומסתורית */
+.certificateButton {
+    font-family: 'Frank Ruhl Libre', serif;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(15, 23, 42, 0.8)); /* רקע מעומעם כחול-כהה */
+    color: #dfb76c; /* טקסט זהב מלכותי */
+    border: 1px solid rgba(223, 183, 108, 0.5); /* מסגרת זהב חצי שקופה */
+    padding: 12px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px; /* קצוות מעוגלים ואלגנטיים */
+    cursor: pointer;
+    margin-top: 25px; /* מרווח קל מהטקסט שמעליו */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* מרווח בין האייקון לטקסט */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 15px rgba(30, 58, 138, 0.3); /* הילה כחולה עדינה ברקע */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* אפקט ריחוף עכבר חגיגי של ניצחון */
+.certificateButton:hover {
+    transform: translateY(-3px) scale(1.03); /* קפיצה קלה למעלה */
+    border-color: #dfb76c; /* הדגשת מסגרת הזהב */
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.6), rgba(2, 6, 23, 0.9));
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(223, 183, 108, 0.5); /* הילה זהובה מתפרצת שמסמלת הצלחה! */
+}
+
+.certificateButton:active {
+    transform: translateY(-1px);
 }

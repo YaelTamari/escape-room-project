@@ -33,7 +33,7 @@ const Navbar = ({ showProfile = false }) => {
                 
                 {user?.role === 'player' && (
                     <span className={styles.pointsBadge}>
-                        נקודות: {user.total_points || 0} 🔮
+                       הנקודות שלי: {user.points || 0} 🔮
                     </span>
                 )}
                 

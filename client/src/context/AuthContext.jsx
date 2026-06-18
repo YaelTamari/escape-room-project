@@ -35,8 +35,8 @@ export const AuthProvider = ({ children }) => {
 const updatePoints = (pointsToAdd) => {
         if (user) {
             // לוקחים את הנקודות הקיימות, ומוסיפים להן את מה שהרווחנו כרגע
-            const currentPoints = user.total_points || 0;
-            const updatedUser = { ...user, total_points: currentPoints + pointsToAdd };
+            const currentPoints = user.points || 0;
+            const updatedUser = { ...user, points: currentPoints + pointsToAdd };
             
             setUser(updatedUser);
             localStorage.setItem('user', JSON.stringify(updatedUser)); // מעדכנים גם בזיכרון המקומי

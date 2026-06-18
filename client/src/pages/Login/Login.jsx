@@ -33,8 +33,15 @@ const Login = () => {
                     navigate('/lobby', { replace: true }); 
                 }
             }
+            else {
+                // תופס שגיאה שהגיעה מסודר מהשרת (למשל: סיסמה שגויה)
+                setError(data.message || data.error || 'שם משתמש או סיסמה שגויים.');
+            }
+        
         } catch (err) {
-            setError(err.response?.data?.message || 'אירעה שגיאה בהתחברות. אנא נסה שוב.');
+            // תופס שגיאה של נפילת שרת או חוסר תקשורת
+            const serverMsg = err.response?.data?.message || err.message;
+            setError(serverMsg || 'אירעה שגיאה בהתחברות. אנא נסה שוב.');
         }
     };
 

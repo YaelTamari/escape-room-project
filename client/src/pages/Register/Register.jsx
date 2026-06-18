@@ -26,8 +26,14 @@ const Register = () => {
                 authenticate(data.user, data.token);
                 setSuccessRole(data.user.role);
             }
+            else {
+                // תופס שגיאה שהגיעה מסודר (למשל: משתמש כבר קיים / רק מנהלות מורשות)
+                setError(data.message || data.error || 'שגיאה בהרשמה.');
+            }
         } catch (err) {
-            setError(err.response?.data?.message || 'אירעה שגיאה בהרשמה. אנא נסה שוב.');
+            // תופס שגיאה של נפילת שרת או שגיאת רשת
+            const serverMsg = err.response?.data?.message || err.message;
+            setError(serverMsg || 'אירעה שגיאה בהרשמה. אנא נסה שוב.');
         }
     };
 

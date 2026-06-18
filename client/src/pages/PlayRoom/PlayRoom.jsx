@@ -84,10 +84,33 @@ const PlayRoom = () => {
                     showModal('נתיב חדש נפתח! 🗝️', res.message, 'success', () => {
                         setCurrentQuestionIndex(prev => prev + 1);
                     });
+
                 } else {
-                    await finishPlayerRoom(roomId);
-                    showModal('🏆 ניצחון!', 'שרדתם את האתגר ויצאתם לאור!', 'success', () => navigate('/lobby'));
+                    // 1. מציגים קודם כל את הודעת ההצלחה של החידה האחרונה מהדאטה-בייס
+                    showModal(
+                        'החידה האחרונה פוצחה! 🗝️', 
+                        res.message || 'הצלחתם לפתור את המשימה!', 
+                        'success', 
+                        () => {
+                            // 2. ברגע שהמשתמש לוחץ "אישור" במודל הראשון, נפתח מיד מודל שני של סיום החדר
+                            showModal(
+                                '🏆 האתגר הושלם!', 
+                                'כל הכבוד! סיימתם את החדר בהצלחה מרובה והצלתם את החבורה.', 
+                                'success', 
+                                async () => {
+                                    // 3. רק ברגע שהוא לוחץ אישור על סיום החדר - מעדכנים את השרת ועוברים ללובי
+                                    await finishPlayerRoom(roomId);
+                                    navigate('/lobby');
+                                }
+                            );
+                        }
+                    );
                 }
+
+                // } else {
+                //     await finishPlayerRoom(roomId);
+                //     showModal('🏆 ניצחון!', 'שרדתם את האתגר ויצאתם לאור!', 'success', () => navigate('/lobby'));
+                // }
             } else {
                 showModal('הדרך חסומה ❌', res.message, 'danger');
             }
