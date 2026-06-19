@@ -1,44 +1,38 @@
-// 1. הגדרת ההוק. הוא מקבל 2 דברים: פונקציה להפעיל, ופרמטר (כמו טוקן או ID)
 import { useState, useEffect } from 'react';
 export const useFetch = (apiFunction, param = null) => {
 
-    // 2. פותחים 3 סטייטים שינהלו לנו את המסך
-    const [data, setData] = useState(null);    // ישמור את הנתונים שיחזרו
-    const [loading, setLoading] = useState(true); // מסך טעינה
-    const [error, setError] = useState('');       // הודעת שגיאה
+    const [data, setData] = useState(null);   
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState('');     
 
-    // 3. יוז-אפקט שירוץ פעם אחת כשהעמוד עולה
+    //  יוז-אפקט שירוץ פעם אחת כשהעמוד עולה
     useEffect(() => {
                 if (!localStorage.getItem('token')) {
             setLoading(false);
             return;
         }
         const fetchData = async () => {
-            setLoading(true); // מדליק את מסך הטעינה
+            setLoading(true);
             try {
-                // 4. *** כאן הקסם קורה! ***
-                // במקום לכתוב פה ישירות getMyRooms(token), אנחנו מפעילים את הפונקציה הגנרית.
-                // בפועל, כשהדשבורד רץ, השורה הזו מתורגמת בדיוק ל: await getMyRooms(token)
                 const result = await apiFunction(param); 
                 
                 if (result && result.success) {
-                    setData(result); // השליפה הצליחה! שומרים את הנתונים
+                    setData(result); 
+                    
                 } else {
                     setError('שגיאה בקבלת הנתונים מהשרת.');
                 }
             } catch (err) {
-                setError('שגיאה בתקשורת עם השרת.'); // אם השרת נפל
+                setError('שגיאה בתקשורת עם השרת.'); 
             } finally {
-                setLoading(false); // מכבה את מסך הטעינה בכל מקרה
+                setLoading(false); 
             }
         };
 
-        // מוודא שאנחנו לא מנסים לשלוף נתונים אם חסר לנו טוקן/ID
         if (param !== undefined) {
             fetchData();
         }
     }, [apiFunction, param]); 
 
-    // 5. ההוק מסתיים ומחזיר לדשבורד אריזה עם 3 המשתנים המוכנים
     return { data, loading, error };
 };

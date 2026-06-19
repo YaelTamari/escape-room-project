@@ -1,12 +1,10 @@
 import React from 'react';
 import styles from './RoomCard.module.css';
 
-// הכרטיסייה מקבלת את נתוני החדר ואת פונקציות הלחיצה כ-Props
 const RoomCard = ({ room, onManage, onEdit, onDelete }) => {
     return (
         <div className={styles.card}>
 
-            {/* 1. הוספת תמונת החדר ללובי - משתמשת בכתובת המלאה ומטפלת ברווחים ועברית */}
             {room.cover_image_url && (
                 <div className={styles.imageWrapper}>
                     <img 

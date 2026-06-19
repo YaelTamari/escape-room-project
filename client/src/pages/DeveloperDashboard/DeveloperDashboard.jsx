@@ -4,22 +4,17 @@ import { getMyRooms, deleteRoom } from '../../api/roomApi';
 
 import Navbar from '../../components/Navbar/Navbar';
 import RoomCard from '../../components/RoomCard/RoomCard';
-import Modal from '../../components/Modal/Modal'; // הייבוא של המודאל!
+import Modal from '../../components/Modal/Modal'; 
 import { useFetch } from '../../hooks/useFetch'; 
-import styles from './DeveloperDashboard.module.css'; // ייבוא ה-CSS המופרד
+import styles from './DeveloperDashboard.module.css'; 
 
 const DeveloperDashboard = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-
-    // שואבים נתונים עם ההוק שלנו
     const { data, loading, error } = useFetch(getMyRooms, token);
     const [myRooms, setMyRooms] = useState([]);
-
-    // סטייטים חדשים לשליטה על המודאלים!
-    const [roomToDelete, setRoomToDelete] = useState(null); // ישמור איזה חדר למחוק
-    const [successMessage, setSuccessMessage] = useState(''); // ישמור הודעת הצלחה אם צריך
-
+    const [roomToDelete, setRoomToDelete] = useState(null); 
+    const [successMessage, setSuccessMessage] = useState(''); 
     useEffect(() => {
         if (data && data.rooms) {
             setMyRooms(data.rooms);
@@ -33,13 +28,11 @@ const DeveloperDashboard = () => {
     const handleCreateNewRoom = () => navigate('/developer/create-room');
     const handleEditRoom = (roomId) => navigate(`/developer/edit-room/${roomId}`);
     const handleManageQuestions = (roomId) => navigate(`/manage-room/${roomId}`);
-
-    // פונקציה 1: מדליקה את מודאל האזהרה (נשלחת לכרטיסייה)
     const handleDeleteClick = (roomId) => {
         setRoomToDelete(roomId); 
     };
 
-    // פונקציה 2: מופעלת רק אם המשתמש לחץ "כן, מחק!" בתוך המודאל
+    //  מופעלת רק אם המשתמש לחץ "כן, מחק!" בתוך המודאל
     const executeDelete = async () => {
         try {
             await deleteRoom(roomToDelete, token);
@@ -88,16 +81,14 @@ const DeveloperDashboard = () => {
                                 room={room} 
                                 onManage={handleManageQuestions} 
                                 onEdit={handleEditRoom} 
-                                onDelete={handleDeleteClick} // שלחנו את הפונקציה שרק מדליקה את המודאל
+                                onDelete={handleDeleteClick} 
                             />
                         ))}
                     </div>
                 )}
             </div>
 
-            {/* אזור המודאלים - הם לא תופסים מקום על המסך אלא קופצים רק כשהסטייט מתמלא */}
             
-            {/* מודאל 1: אזהרה לפני מחיקה */}
             {roomToDelete && (
                 <Modal 
                     title="מחיקת חדר"
@@ -110,7 +101,6 @@ const DeveloperDashboard = () => {
                 />
             )}
 
-            {/* מודאל 2: הודעת הצלחה */}
             {successMessage && (
                 <Modal 
                     title="פעולה הושלמה"
@@ -118,7 +108,7 @@ const DeveloperDashboard = () => {
                     message={successMessage}
                     confirmText="המשך"
                     confirmType="success"
-                    onConfirm={() => setSuccessMessage('')} // לחיצה על המשך מאפסת את ההודעה וסוגרת את המודאל
+                    onConfirm={() => setSuccessMessage('')} 
                 />
             )}
 

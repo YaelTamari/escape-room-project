@@ -26,7 +26,6 @@ const validateQuestionInput = (req, res, next) => {
 const validateRoomInput = (req, res, next) => {
     const { title, timer_seconds, difficulty_level, min_points_required } = req.body;
 
-    // חובה: כותרת וטיימר
     if (!title || title.trim() === '') {
         return res.status(400).json({ success: false, message: "חובה לספק כותרת לחדר" });
     }
@@ -35,7 +34,6 @@ const validateRoomInput = (req, res, next) => {
         return res.status(400).json({ success: false, message: "הטיימר חייב להיות מספר גדול מאפס" });
     }
 
-    // רשות, אבל אם הוכנס - חייב להיות תקין
     if (difficulty_level && (isNaN(difficulty_level) || difficulty_level < 1 || difficulty_level > 5)) {
         return res.status(400).json({ success: false, message: "רמת הקושי צריכה להיות בין 1 ל-5" });
     }
@@ -44,7 +42,7 @@ const validateRoomInput = (req, res, next) => {
          return res.status(400).json({ success: false, message: "מינימום נקודות חייב להיות מספר חיובי או 0" });
     }
 
-    next(); // הכל תקין!
+    next(); 
 };
 
 export default { 

@@ -8,12 +8,11 @@ const Modal = ({
     onCancel, 
     confirmText = "אישור", 
     cancelText = "ביטול", 
-    confirmType = "primary", // יכול להיות: primary, danger, success
+    confirmType = "primary", // primary, danger, success
     showCancel = false,
     titleColor = "#111827" 
 }) => {
     const isScroll = confirmType === 'scroll';
-    // בוחרים את המחלקה (CSS) המתאימה לסוג הכפתור שביקשנו
     const confirmClass = confirmType === 'danger' ? styles.dangerBtn 
                        : confirmType === 'success' ? styles.successBtn 
                        : confirmType === 'scroll' ? styles.scrollCloseBtn
@@ -34,7 +33,6 @@ const Modal = ({
                 <div className={styles.message}>{message}</div>
 
                 <div className={styles.buttonGroup}>
-                    {/* כפתור אישור / פעולה עיקרית */}
                     <button onClick={onConfirm} className={`${styles.btn} ${confirmClass}`}>
                         {isScroll ? "סגור מגילה 📜" : confirmText}
                     </button>

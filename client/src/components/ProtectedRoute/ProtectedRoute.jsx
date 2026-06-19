@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-// הוספנו את Outlet !
+
 import { Navigate, Outlet } from 'react-router-dom'; 
 import { AuthContext } from '../../context/AuthContext';
 
@@ -13,7 +13,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         return <Navigate to={user.role === 'developer' ? '/developer' : '/lobby'} replace />;
     }
 
-    // הוספנו פה חוק חכם: אם שמנו בתוכו ילדים - תציג אותם. אם לא, תציג את הראוטים שמתחתיו (Outlet)
     return children ? children : <Outlet />;
 };
 

@@ -1,7 +1,6 @@
 
 import QuestionModel from '../models/questionModel.js';
 
-// 1. הוספת שאלה חדשה לחדר
 const createQuestion = async (req, res) => {
     const { roomId } = req.params;
     const { 
@@ -43,7 +42,6 @@ const createQuestion = async (req, res) => {
     }
 };
 
-// 2. קבלת כל השאלות של חדר ספציפי
 const getRoomQuestions = async (req, res) => {
     const { roomId } = req.params;
 
@@ -55,9 +53,8 @@ const getRoomQuestions = async (req, res) => {
     }
 };
 
-// 3. עדכון שאלה קיימת
 const updateQuestion = async (req, res) => {
-    const { id } = req.params; // ה-ID של השאלה עצמה
+    const { id } = req.params; 
     const { 
         question_text, 
         correct_answer, 
@@ -77,12 +74,6 @@ const updateQuestion = async (req, res) => {
     }
 
     try {
-        // בדיקה שהשאלה בכלל קיימת בבסיס הנתונים (מוערת לבחירתך)
-        // const existingQuestion = await QuestionModel.findById(id);
-        // if (!existingQuestion) {
-        //     return res.status(404).json({ success: false, message: 'השאלה שאתה מנסה לעדכן לא נמצאה' });
-        // }
-
         await QuestionModel.update(
             id, 
             question_text, 
@@ -103,17 +94,10 @@ const updateQuestion = async (req, res) => {
     }
 };
 
-// 4. מחיקת שאלה
 const deleteQuestion = async (req, res) => {
-    const { id } = req.params; // ה-ID של השאלה
+    const { id } = req.params; 
 
     try {
-        // בדיקה שהשאלה קיימת לפני שמוחקים (מוערת לבחירתך)
-        // const existingQuestion = await QuestionModel.findById(id);
-        // if (!existingQuestion) {
-        //     return res.status(404).json({ success: false, message: 'השאלה שאתה מנסה למחוק לא נמצאה' });
-        // }
-
         await QuestionModel.remove(id);
         res.json({ success: true, message: 'השאלה נמחקה בהצלחה!' });
     } catch (err) {

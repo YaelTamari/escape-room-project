@@ -1,7 +1,6 @@
-import db from '../config/db.js'; // ודאי שנתיב החיבור ל-DB נכון וכולל סיומת .js
+import db from '../config/db.js';
 
 const RoomElement = {
-    // שליפת כל האלמנטים של חדר + נתיב הקובץ מה-assets אם קיים
     getAllByRoomId: async (roomId) => {
         const [rows] = await db.execute(
             `SELECT re.*, a.file_url, a.name as asset_name 
@@ -13,7 +12,6 @@ const RoomElement = {
         return rows;
     },
 
-    // יצירת אלמנט חדש
     create: async (roomId, elementData) => {
         const { element_type, button_label, asset_id, element_text } = elementData;
         const [result] = await db.execute(
@@ -24,7 +22,6 @@ const RoomElement = {
         return result.insertId;
     },
 
-    // מחיקת אלמנט
     delete: async (id) => {
         const [result] = await db.execute('DELETE FROM room_elements WHERE id = ?', [id]);
         return result.affectedRows > 0;

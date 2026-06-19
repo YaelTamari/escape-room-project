@@ -1,26 +1,22 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// יצירת ה-Context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // בדיקה אוטומטית ברענון הדף (F5) - האם המשתמש כבר היה מחובר?
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const storedToken = localStorage.getItem('token');
 
         if (storedUser && storedUser !== 'undefined' && storedToken)  {
-            setUser(JSON.parse(storedUser)); // הופכים את הטקסט חזרה לאובייקט JavaScript
+            setUser(JSON.parse(storedUser));
         }
-        setLoading(false); // סיימנו לבדוק, האפליקציה מוכנה לפעולה
+        setLoading(false);
     }, []);
 
-    // פונקציה שתופעל מהעמוד של ה-Login אחרי שהשרת החזיר תשובה מושלמת
     const authenticate = (userData, token) => {
-        // הוספנו בדיקה: אם אין יוזר או טוקן, אל תשמור כלום!
         if (!userData || !token) {
             console.error("שגיאה: השרת לא החזיר משתמש או טוקן", { userData, token });
             return; 
@@ -30,23 +26,15 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', token);
     };
     
-
-//////////////////////////////
 const updatePoints = (pointsToAdd) => {
         if (user) {
-            // לוקחים את הנקודות הקיימות, ומוסיפים להן את מה שהרווחנו כרגע
             const currentPoints = user.points || 0;
             const updatedUser = { ...user, points: currentPoints + pointsToAdd };
             
             setUser(updatedUser);
-            localStorage.setItem('user', JSON.stringify(updatedUser)); // מעדכנים גם בזיכרון המקומי
+            localStorage.setItem('user', JSON.stringify(updatedUser));
         }
     };
-    //////////////////////
-
-
-
-    // פונקציית התנתקות מהמערכת
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');

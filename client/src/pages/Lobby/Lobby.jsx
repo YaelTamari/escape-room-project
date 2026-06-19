@@ -10,19 +10,14 @@ import { useFetch } from '../../hooks/useFetch';
 import styles from './Lobby.module.css'; // ייבוא ה-CSS המופרד
 
 const Lobby = () => {
-    // הוצאנו מפה את ה-logout, כי ה-Navbar שלנו מטפל בזה עכשיו
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const playerPoints = user?.points || 0;
-
-    // 1. קריאה לשרת דרך ההוק המותאם אישית שלנו
     const { data, loading, error } = useFetch(getAllRooms, token);
-    const [rooms, setRooms] = useState([]);
-
-    // 2. סטייט להדלקת מודאל במקום ה-alert
     const [lockedMessage, setLockedMessage] = useState('');
-
+    const [rooms, setRooms] = useState([]);
+   
     // כשמגיעים הנתונים מהשרת (דרך ההוק), שומרים אותם
     useEffect(() => {
         if (data && data.success) {
@@ -30,7 +25,6 @@ const Lobby = () => {
         }
     }, [data]);
 
-    // הגנת ניווט למשתמשים לא מחוברים
     useEffect(() => {
         if (!token) navigate('/login');
     }, [token, navigate]);
@@ -39,7 +33,6 @@ const Lobby = () => {
         if (playerPoints >= room.min_points_required) {
             navigate(`/play/${room.id}`);
         } else {
-            // במקום alert מכוער, מדליקים את הסטייט של המודאל
             setLockedMessage(`החדר נעול! עליך לצבור עוד ${room.min_points_required - playerPoints} נקודות כדי להיכנס.`);
         }
     };
@@ -161,6 +154,8 @@ const Lobby = () => {
                     );
                 })}
             </div>
+
+
 
             {/* 4. מודאל ההתראה שמחליף את ה-alert של חדר נעול */}
             {lockedMessage && (

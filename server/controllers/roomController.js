@@ -1,9 +1,9 @@
 import RoomModel from '../models/roomModel.js';
+
 const getAllRooms = async (req, res) => {
     try {
         const rooms = await RoomModel.getAllRooms();
 
-        // מחזירים ללקוח בדיוק את המבנה שה-React מצפה לקבל
         res.status(200).json({
             success: true,
             rooms: rooms
@@ -13,9 +13,6 @@ const getAllRooms = async (req, res) => {
         res.status(500).json({ success: false, message: 'שגיאה בשליפת החדרים מהשרת' });
     }
 };
-
-
-// 1. יצירת חדר חדש
 const createRoom = async (req, res) => {
     const { title,
         description,
@@ -25,7 +22,6 @@ const createRoom = async (req, res) => {
         timer_seconds,
         min_points_required,
         difficulty_level } = req.body;
-    // ה-ID של המפתח מגיע אלינו ישירות מהטוקן המאובטח! (המידלוור שתל אותו ב-req.user)
     const creatorId = req.user.id;
 
     try {
@@ -46,9 +42,7 @@ const createRoom = async (req, res) => {
     }
 };
 
-// 2. קבלת כל החדרים של המפתח שהתחבר
 const getMyRooms = async (req, res) => {
-    // גם פה, אנחנו שולפים את ה-ID מהטוקן של מי שמבקש, הכי מאובטח שיש
     const creatorId = req.user.id;
 
     try {
@@ -59,7 +53,6 @@ const getMyRooms = async (req, res) => {
     }
 };
 
-// 3. עדכון חדר
 const updateRoom = async (req, res) => {
     const { id } = req.params;
     const { title,
@@ -87,7 +80,6 @@ const updateRoom = async (req, res) => {
     }
 };
 
-// 4. מחיקת חדר
 const deleteRoom = async (req, res) => {
     const { id } = req.params;
 

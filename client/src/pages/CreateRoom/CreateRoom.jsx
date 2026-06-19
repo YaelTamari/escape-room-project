@@ -18,7 +18,6 @@ const CreateRoom = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [successModal, setSuccessModal] = useState({ show: false, nextRoute: '' });
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -31,7 +30,6 @@ const CreateRoom = () => {
             const roomDataForServer = {
                 ...formData,
                 timer_seconds: formData.timer_minutes * 60,
-                // bg_audio_id: null
                 cover_image_id: formData.bg_image_id
             };
 
@@ -59,7 +57,6 @@ const CreateRoom = () => {
                     </div>
                 )}
                 
-                {/* קריאה לטופס הגנרי */}
                 <RoomForm 
                     formData={formData} 
                     handleChange={handleChange} 
