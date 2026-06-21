@@ -14,6 +14,7 @@
 }
 
 .lobbyContainer {
+    padding-top: 90px;
     background-color: #020617; /* צבע רקע חשוך קולנועי תואם לפליירום */
     min-height: 100vh;
     color: #f8fafc;
@@ -273,4 +274,33 @@
 .loadMoreButton:hover {
     background: rgba(223, 183, 108, 0.1);
     box-shadow: 0 0 10px rgba(223, 183, 108, 0.2);
+}
+
+
+
+/* === התאמה רספונסיבית ללובי במובייל === */
+@media (max-width: 1024px) {
+    .roomsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* התאמה אוטומטית למסכים בינוניים */
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 32px; /* כותרת פרופורציונלית לטלפון */
+    }
+}
+
+@media (max-width: 768px) {
+    .headerSection {
+        padding: 30px 15px 20px;
+    }
+
+    .roomsGrid {
+        grid-template-columns: 1fr; /* בטלפון: חדר אחד בכל שורה */
+    }
+
+    .roomCard {
+        margin-bottom: 10px;
+    }
 }

@@ -9,18 +9,13 @@ import styles from './PlayRoom.module.css';
 const PlayRoom = () => {
     const { roomId } = useParams();
     const navigate = useNavigate();
-
     const [gameData, setGameData] = useState(null);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answerInput, setAnswerInput] = useState('');
     const [loading, setLoading] = useState(true);
     const [modalConfig, setModalConfig] = useState(null);
-   //הפעלת השמע
     const [isMusicStarted, setIsMusicStarted] = useState(false);
-
     const [showIntro, setShowIntro] = useState(true);
-
-    // מושכים את הפונקציה שמעדכנת נקודות בלייב
     const { updatePoints } = useContext(AuthContext);
 
     useEffect(() => {
@@ -45,7 +40,6 @@ const PlayRoom = () => {
     const showModal = (title, message, type, onConfirm = null, onCancel = null, cancelText = null) => {
         setModalConfig({
             title, message, confirmType: type, cancelText,
-            // showCancel: onCancel !== null && onCancel !== undefined && onCancel.toString() !== '() => {}',            onCancel: onCancel ? () => { setModalConfig(null); onCancel(); } : () => setModalConfig(null),
             showCancel: !!cancelText,
             onConfirm: () => { setModalConfig(null); if (onConfirm) onConfirm(); }
         });
@@ -133,10 +127,8 @@ const PlayRoom = () => {
             showModal(element.button_label, scrollContent, 'scroll');
         } 
         else if (element.element_type === 'image') {
-            // 1. חילוץ נתיב הקובץ מכל שדה אפשרי שהשרת עשוי להחזיר
             const rawPath = element.file_url || element.file_path || element.asset_url || element.path;
             
-            // 2. בניית הכתובת המלאה ושימוש ב-encodeURI חובה עבור עברית ורווחים!
             const fullUrl = rawPath ? encodeURI(`http://localhost:5000${rawPath}`) : '';
 
             const imageHtml = (
@@ -155,52 +147,26 @@ const PlayRoom = () => {
         }
     };
 
-    // const handleElementClick = (element) => {
-    //     if (element.element_type === 'scroll') {
-    //         const scrollContent = (
-    //             <div style={{ fontFamily: "'Frank Ruhl Libre', serif", backgroundImage: 'url("http://localhost:5000/assets/popup/מגילה.jpg")', backgroundSize: '100% 100%', padding: '40px', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2c1e0f', fontSize: '24px' }}>
-    //                 {element.element_text}
-    //             </div>
-    //         );
-    //         showModal(element.button_label, scrollContent, 'scroll');
-    //     } else if (element.element_type === 'image') {
-    //         const imageHtml = <div style={{ textAlign: 'center' }}>
-    //             <img 
-    //                 src={`http://localhost:5000${element.file_url || element.file_path}`} 
-    //                 alt={element.button_label || "element"} 
-    //                 className={styles.popupImage} 
-    //             />                </div>;
-    //         showModal(element.button_label + ' 🗺️', imageHtml, 'primary');
-    //     }
-    // };
-
+    
     if (loading) return <div className={styles.loading}>מדליק את הלפידים ופותח את שערי החדר... ⏳</div>;
     if (!gameData || !gameData.questions) return null;
 
-   
     const currentQ = gameData.questions[currentQuestionIndex];
     
     // שימוש ב-encodeURI הופך רווחים ואותיות בעברית לנתיב שהדפדפן יודע לקרוא
     const bgUrl = gameData.room.bg_image_url 
     ? encodeURI(`http://localhost:5000${gameData.room.bg_image_url}`) 
     : '';
-    // const bgUrl = gameData.room.bg_image_url ? `http://localhost:5000${gameData.room.bg_image_url}` : '';
 
-    // תיקנתי את הכפילות פה! יש רק משתנה אחד כזה עכשיו.
     const audioUrl = gameData.room.bg_audio_url ? `http://localhost:5000${gameData.room.bg_audio_url}` : '';
 
     return (
         <div className={styles.pageContainer} style={{ backgroundImage: bgUrl ? `url("${bgUrl}")` : 'none' }}>
             <Navbar />
-           
-            {/* --- הקסם של המוזיקה קורה כאן! --- */}
-            
+                       
             {isMusicStarted && audioUrl && (
                 <audio src={audioUrl} autoPlay loop />
 )}
-            {/* {audioUrl && (
-                <audio src={audioUrl} autoPlay loop />
-            )} */}
            
             {showIntro ? (
                 <div className={styles.introScreen}>
@@ -225,8 +191,7 @@ const PlayRoom = () => {
                     </div>
 
                     <div className={styles.gameLayout}>
-                        {/* העזרים כעיגולים צפים בצד */}
-                        <div className={styles.sidebarFloating}>
+                       <div className={styles.sidebarFloating}>
                             {gameData.elements && gameData.elements.map(el => (
                                 <div key={el.id} onClick={() => handleElementClick(el)} className={styles.elementCircle}>
                                     <span>{el.element_type === 'scroll' ? '📜' : '🗺️'}</span>

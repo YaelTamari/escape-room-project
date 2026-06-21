@@ -3,11 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import db from './config/db.js';
 
-// הגדרת __dirname בסביבת ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// התיקייה הראשית שבה נמצאים הנכסים (server/public/assets)
 const BASE_ASSETS_DIR = path.join(__dirname, 'public', 'assets');
 
 // מיפוי התיקיות הפיזיות לסוג ה-ENUM המתאים בבסיס הנתונים
@@ -18,20 +16,18 @@ const foldersToScan = [
 ];
 
 async function seedAssets() {
-    console.log('🚀 מתחיל סנכרון קבצים ל-MySQL...');
+    console.log(' מתחיל סנכרון קבצים ל-MySQL...');
     let addedCount = 0;
 
     try {
         for (const folder of foldersToScan) {
             const folderPath = path.join(BASE_ASSETS_DIR, folder.name);
 
-            // בדיקה אם התיקייה קיימת פיזית במחשב
             if (!fs.existsSync(folderPath)) {
-                console.warn(`⚠️ התיקייה לא קיימת, מדלג: ${folderPath}`);
+                console.warn(` התיקייה לא קיימת, מדלג: ${folderPath}`);
                 continue;
             }
 
-            // קריאת כל הקבצים שיש בתוך התיקייה הנוכחית
             const files = fs.readdirSync(folderPath);
 
             for (const file of files) {
@@ -61,18 +57,18 @@ async function seedAssets() {
                             'INSERT INTO assets (type, name, file_url) VALUES (?, ?, ?)',
                             [folder.type, cleanName, publicPath]
                         );
-                        console.log(`✅ נוסף בהצלחה: ${file} (${folder.type})`);
+                        console.log(` נוסף בהצלחה: ${file} (${folder.type})`);
                         addedCount++;
                     }
                 } catch (fileError) {
-                    console.error(`❌ שגיאה בהכנסת הקובץ ${file} למסד הנתונים:`, fileError.message);
+                    console.error(` שגיאה בהכנסת הקובץ ${file} למסד הנתונים:`, fileError.message);
                 }
             }
         }
 
-        console.log(`\n🎉 סיום בהצלחה! סך הכל נוספו ${addedCount} פריטים חדשים.`);
+        console.log(`\n סיום בהצלחה! סך הכל נוספו ${addedCount} פריטים חדשים.`);
     } catch (error) {
-        console.error('❌ שגיאה כללית בתהליך הסנכרון:', error.message);
+        console.error(' שגיאה כללית בתהליך הסנכרון:', error.message);
     } finally {
         // סגירת החיבור למסד הנתונים בצורה נקייה בסיום הריצה
         if (db && typeof db.end === 'function') {
@@ -82,5 +78,4 @@ async function seedAssets() {
     }
 }
 
-// הפעלת הפונקציה
 seedAssets();

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap');
 
 .pageContainer {
+    padding-top: 90px;
     min-height: 100vh;
     background-color: #020617;
     color: #e2e8f0;
@@ -17,6 +18,7 @@
     max-width: 1600px;
     margin: 0 auto;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 /* === קופסאות כלליות (Sidebar, Form, Finish) === */
@@ -106,3 +108,84 @@
 
 .loadingState { text-align: center; color: #dfb76c; font-size: 24px; margin-top: 100px; }
 
+
+
+
+/* התאמה לטלפונים עבור עמוד ניהול השאלות */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .backButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* כרטיסיית השאלה הופכת למבנה אנכי בטלפון */
+    .questionCard {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* כפתורי הפעולות (עריכה/מחיקה) ייפרסו לכל הרוחב בתחתית הכרטיסייה */
+    .actions {
+        width: 100%;
+        justify-content: space-between;
+        border-top: 1px solid #334155;
+        padding-top: 12px;
+    }
+
+    .editBtn, .deleteBtn {
+        flex: 1;
+        justify-content: center;
+        padding: 10px;
+    }
+}
+
+
+/* פתרון בעיית החיתוך במובייל - מאפשר לבלוקים לרדת שורה */
+.mainContent {
+    flex-wrap: wrap; /* גורם לבלוקים לרדת אחד מתחת לשני במקום להיחתך */
+}
+
+/* הגדרת התנהגות מיוחדת למסכי טלפון */
+/* הגדרת התנהגות מיוחדת למסכי טלפון */
+@media (max-width: 1024px) {
+    .mainContent {
+        flex-direction: column; /* מסדר את הבלוקים בצורה אנכית מושלמת */
+        padding: 10px;
+        gap: 15px;
+    }
+
+    /* תיקון הריווחים הפנימיים כדי שהטופס והאלמנטים לא ייחנקו בטלפון */
+    .sidebar, .formColumn, .rightColumn > div {
+        padding: 15px !important; /* מקטין את הריווח הפנימי ונותן עוד מקום לשדות */
+        width: 100% !important;
+        box-sizing: border-box; /* מבטיח שהריווח לא ירחיב את הבלוק מעבר למסך */
+    }
+
+    /* העמודה הימנית (ניהול אלמנטים וסיום) והעמודה השמאלית (הטופס) יתפסו 100% רוחב */
+    .rightColumn, .formColumn {
+        width: 100% !important;
+        flex: none !important;
+    }
+    
+    .sidebar {
+        width: 100% !important;
+    }
+
+    /* מוודא שכל שדות הקלט והלייבלים יתפרסו יפה מקצה לקצה */
+    .inputField, .textareaField, .selectField {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}

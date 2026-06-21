@@ -18,26 +18,25 @@ const Navbar = ({ showProfile = false }) => {
                 <h2 className={styles.logo}>
                     {user?.role === 'developer' ? ' סטודיו מפתחים' : 'EscapeMaster'}
                 </h2>
-                
+
             </div>
-            
+
             <div className={styles.userSection}>
                 <span className={styles.greeting}>
                     שלום, <b className={styles.username}>{user?.username}</b>
                 </span>
-                
+
                 {user?.role === 'player' && (
                     <span className={styles.pointsBadge}>
-                       הנקודות שלי: {user.points || 0} 🔮
+                        הנקודות שלי: {user.points || 0} 🔮
                     </span>
                 )}
-                
-                <button 
-                    onClick={handleLogout} 
-                    className={`${styles.navButton} ${styles.logoutButton}`}
-                >
-                    התנתקות 🗝️
-                </button>
+
+                <div className={styles.logoutWrapper}>
+                    <button onClick={handleLogout} className={`${styles.navButton} ${styles.logoutButton}`}>
+                        התנתקות 🗝️
+                    </button>
+                </div>
             </div>
         </nav>
     );

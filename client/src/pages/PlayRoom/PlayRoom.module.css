@@ -14,6 +14,7 @@
 }
 
 .pageContainer {
+    padding-top: 90px;
     min-height: 100vh;
     direction: rtl;
     display: flex;
@@ -376,4 +377,60 @@
 
 .popupError {
     color: #ef4444; /* צבע אדום נעים לעין */
+}
+
+
+
+/* === התאמה רספונסיבית לעמוד משחק במובייל === */
+@media (max-width: 1024px) {
+    .gameCard {
+        max-width: 90%;
+        padding: 30px 20px;
+    }
+    
+    .roomTitle {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .exitButtonWrapper {
+        position: static; /* במקום לצוף, הכפתור יתיישב יפה בראש העמוד */
+        margin: 15px auto;
+        text-align: center;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .exitButton {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gameCard {
+        max-width: 95%;
+        padding: 20px 15px;
+        margin-top: 10px;
+    }
+
+    .roomTitle {
+        font-size: 1.6rem;
+    }
+
+    .storySection {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+
+    /* כפתורי הבדיקה והרמז יירדו אחד מתחת לשני בטלפון כדי שיהיה נוח ללחוץ */
+    .actionButtonsRow {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .submitButton, .hintButton {
+        width: 100%;
+        margin: 0;
+        padding: 12px;
+    }
 }

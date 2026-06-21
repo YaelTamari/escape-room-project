@@ -4,8 +4,6 @@ import { createQuestion, getQuestionsByRoom, updateQuestion, deleteQuestion } fr
 import Navbar from '../../components/Navbar/Navbar';
 import Modal from '../../components/Modal/Modal';
 import { useFetch } from '../../hooks/useFetch';
-
-// ייבוא הקומפוננטה הגנרית החדשה לניהול האביזרים והפופ-אפים
 import RoomElementsManager from '../../components/RoomElementsManager/RoomElementsManager';
 import styles from './ManageRoomQuestions.module.css'; // ייבוא ה-CSS המופרד
 
@@ -18,16 +16,11 @@ const EMPTY_FORM = {
 const ManageRoomQuestions = () => {
     const { roomId } = useParams();
     const navigate = useNavigate();
-
-    // שאיבת הנתונים של השאלות
     const { data, loading, error } = useFetch(getQuestionsByRoom, roomId);
     const [questions, setQuestions] = useState([]);
-
     const [selectedQuestionId, setSelectedQuestionId] = useState(null);
     const [formData, setFormData] = useState(EMPTY_FORM);
     const [isDirty, setIsDirty] = useState(false);
-
-    // ניהול מודאלים נקי
     const [successMessage, setSuccessMessage] = useState('');
     const [questionToDelete, setQuestionToDelete] = useState(null);
     const [pendingSwitch, setPendingSwitch] = useState(null);
@@ -139,7 +132,7 @@ const ManageRoomQuestions = () => {
     };
 
     const completeRoom = () => {
-        setSuccessMessage('החדר נשמר בהצלחה! 🏆');
+        setSuccessMessage('החדר נשמר בהצלחה! ');
     };
 
     if (loading) return <div className={styles.loadingState}>טוען את נתוני החדר... ⏳</div>;

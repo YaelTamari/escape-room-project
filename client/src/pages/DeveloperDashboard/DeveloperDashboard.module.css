@@ -13,6 +13,7 @@
 }
 
 .dashboardContainer {
+    padding-top: 90px;
     background-color: #020617; /* רקע חשוך עמוק ויוקרתי כמו הלובי */
     min-height: 100vh;
     color: #f8fafc;
@@ -257,4 +258,43 @@
     font-size: 18px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(4px);
+}
+
+
+/* === התאמה רספונסיבית ללוח מפתחים במובייל === */
+@media (max-width: 1024px) {
+    .roomsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        padding: 20px 15px;
+    }
+
+    /* כרטיסיית כותרת עליונה הופכת לאנכית */
+    .headerCard {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .createButton {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .roomsGrid {
+        grid-template-columns: 1fr; /* חדר אחד בשורה */
+    }
+    
+    /* התאמת כפתורי הפעולות בתוך הכרטיסיות של המפתח */
+    .roomsGrid :global(.roomCard) {
+        display: flex;
+        flex-direction: column;
+    }
 }

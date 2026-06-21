@@ -1,113 +1,129 @@
-/* Navbar.module.css */
-
-/* ייבוא פונטים מגוגל - שילוב של פונט עתיק חריף ופונט נקי יוקרתי */
+/* Navbar.module.css - משודרג, קבוע למעלה ורספונסיבי */
 @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&display=swap');
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 50px;
-    
-    /* רקע יער עמוק פסטורלי בשילוב אפקט זכוכית חלומית */
-    background: linear-gradient(135deg, rgba(10, 26, 18, 0.82), rgba(15, 23, 42, 0.9)); 
+    padding: 15px 40px;
+    background: linear-gradient(135deg, rgba(6, 12, 26, 0.92), rgba(15, 23, 42, 0.97)); 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(223, 183, 108, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
     
-    /* מסגרת זהב עתיק דקה ועדינה בתחתית */
-    border-bottom: 1px solid rgba(223, 183, 108, 0.25);
-    
-    /* צל רך ועמוק שנותן תחושת עומק מעל החדר */
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
-    
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    direction: rtl;
-    font-family: 'Assistant', sans-serif;
+    /* פקודות קיבוע לראש המסך */
+    position: fixed;    /* הופך את הבר לקבוע */
+    top: 0;             /* נצמד לקצה העליון */
+    left: 0;            /* מתחיל משמאל */
+    right: 0;           /* נמתח עד ימין */
+    width: 100%;        /* תופס את כל רוחב המסך */
+    box-sizing: border-box;
+    z-index: 1000;      /* מבטיח שהוא תמיד יהיה מעל שאר האלמנטים בעמוד */
 }
 
-/* אזור הלוגו והניווט */
 .logoContainer {
+    flex: 1;
     display: flex;
-    gap: 35px;
-    align-items: center;
+    justify-content: flex-start;
 }
 
 .logo {
+    font-family: 'Frank Ruhl Libre', serif;
+    color: #cbd5e1;
+    font-size: 24px;
     margin: 0;
-    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* הברכה המרכזית המשודרגת - גדולה, זהב ותאורה אחורית כחולה */
+.userSection {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.greeting {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 24px; 
+    color: #dfb76c; 
     font-weight: 700;
-    font-family: 'Frank Ruhl Libre', serif; /* פונט מסתורי עתיק */
-    color: #dfb76c; /* זהב מלכותי */
-    text-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
+    text-shadow: 0 0 15px rgba(30, 58, 138, 0.8), 0 0 30px rgba(30, 58, 138, 0.6); 
     letter-spacing: 0.5px;
 }
 
-/* כפתורי ניווט כלליים (כמו ספר שחקן) */
-.navButton {
-    background: rgba(223, 183, 108, 0.06);
-    color: #e2e8f0;
-    border: 1px solid rgba(223, 183, 108, 0.3);
-    padding: 10px 20px;
-    border-radius: 8px;
+.username {
+    color: #fff;
+    text-shadow: 0 0 10px #dfb76c, 0 0 20px rgba(30, 58, 138, 0.8);
+}
+
+.pointsBadge {
     font-size: 15px;
+    font-weight: 700;
+    color: #dfb76c;
+    background: rgba(30, 58, 138, 0.3);
+    border: 1px solid rgba(223, 183, 108, 0.2);
+    padding: 6px 16px;
+    border-radius: 30px;
+    box-shadow: inset 0 0 10px rgba(30, 58, 138, 0.5);
+}
+
+/* אזור כפתור ההתנתקות בצד שמאל */
+.logoutWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navButton {
+    background: rgba(0, 0, 0, 0.4);
+    color: #94a3b8;
+    border: 1px solid rgba(223, 183, 108, 0.3);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .navButton:hover {
-    background: rgba(223, 183, 108, 0.15);
-    color: #fff;
-    border-color: #dfb76c;
-    box-shadow: 0 0 15px rgba(223, 183, 108, 0.25);
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
     transform: translateY(-1px);
 }
 
-/* אזור המשתמש בצד שמאל */
-.userSection {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
+/* === התאמה רספונסיבית ל-Navbar בטלפונים === */
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed; /* נשאר קבוע גם בטלפון */
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        text-align: center;
+    }
 
-.greeting {
-    font-size: 15px;
-    color: #94a3b8;
-}
+    .logoContainer, .logoutWrapper, .userSection {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+    }
 
-.username {
-    color: #f8fafc;
-    font-weight: 700;
-    font-size: 16px;
-}
+    .userSection {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-/* תג הנקודות היוקרתי - קריסטל זוהר בעדינות */
-.pointsBadge {
-    font-size: 15px;
-    font-weight: 700;
-    color: #fbbf24;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(217, 119, 6, 0.03));
-    padding: 10px 22px;
-    border-radius: 50px;
-    border: 1px solid rgba(251, 191, 36, 0.35);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+    .greeting {
+        font-size: 20px; 
+    }
 
-/* כפתור התנתקות - במקום אדום זועק: צבע ענבר/ברונזה עמוק, יוקרתי ורגוע */
-.logoutButton {
-    background: rgba(217, 119, 6, 0.05);
-    color: #fdba74; /* גוון אפרסק/ענבר עדין */
-    border: 1px solid rgba(217, 119, 6, 0.3);
-}
-
-.logoutButton:hover {
-    background: rgba(217, 119, 6, 0.15);
-    color: #fff;
-    border-color: #fdba74;
-    box-shadow: 0 0 15px rgba(217, 119, 6, 0.2);
+    .navButton {
+        width: 100%;
+        padding: 10px;
+    }
 }
